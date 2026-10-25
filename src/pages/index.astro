@@ -1,0 +1,422 @@
+---
+// src/pages/index.astro
+import Layout from '../layouts/Layout.astro';
+import ModelCard from '../components/ModelCard.astro';
+import PipelineCompilingBanner from '../components/PipelineCompilingBanner.astro';
+import MethodologyNote from '../components/MethodologyNote.astro';
+import { getAllModels, getExportData } from '../lib/data';
+
+const exportData = getExportData();
+const models = getAllModels();
+const hasModels = models.length > 0;
+
+// Sort top movers by 30-day volume or absolute trend
+const topMovers = hasModels 
+  ? [...models].sort((a, b) => b.metrics.overall.soldVolume30d - a.metrics.overall.soldVolume30d).slice(0, 6)
+  : [];
+---
+
+<Layout 
+  title="TokuPrice — Japanese Tokusatsu Sold-Price Guide & Index"
+  description="Authoritative, financial-grade sold-price guide for Japanese Kamen Rider and Ultraman collectibles. Live JPY medians, condition matrix, and historical trend charts."
+>
+  <!-- Hero Explainer Section -->
+  <section class="hero-section">
+    <div class="container hero-inner">
+      <div class="hero-badge">
+        <span class="badge badge-cib">TOKYO PRIMARY MARKET INDEX</span>
+        <span class="hero-freshness tabular">1 USD = {exportData.exchangeRateUsdJpy.toFixed(2)} JPY</span>
+      </div>
+
+      <h1 class="hero-headline">
+        Stop Paying 80% Markups.<br />
+        <span class="text-accent">See Real Tokyo Sold Prices.</span>
+      </h1>
+
+      <p class="hero-subhead">
+        TokuPrice is the financial-grade sold-price index for tokusatsu collectors. We aggregate verified completed transactions directly from Tokyo’s primary trading engines — <strong>Mercari Japan, Yahoo! Auctions, Mandarake, and Suruga-ya</strong> — across strict condition grades.
+      </p>
+
+      <div class="hero-action-row">
+        <a href="/kamen-rider/" class="btn btn-primary">
+          <span>Explore Kamen Rider Index</span>
+          <span aria-hidden="true">→</span>
+        </a>
+        <a href="/ultraman/" class="btn btn-secondary">
+          <span>Explore Ultraman Index</span>
+          <span aria-hidden="true">→</span>
+        </a>
+        <a href="/watchlist/" class="btn btn-ghost">
+          <span>Portfolio Watchlist</span>
+        </a>
+      </div>
+
+      <div class="hero-metrics-strip">
+        <div class="metric-item">
+          <span class="metric-value font-mono">5 Platforms</span>
+          <span class="metric-label">Mercari, Yahoo, Mandarake, etc.</span>
+        </div>
+        <div class="metric-divider"></div>
+        <div class="metric-item">
+          <span class="metric-value font-mono">3 Conditions</span>
+          <span class="metric-label">Sealed / CIB / Loose</span>
+        </div>
+        <div class="metric-divider"></div>
+        <div class="metric-item">
+          <span class="metric-value font-mono">Dual-Currency</span>
+          <span class="metric-label">Native JPY + Live USD</span>
+        </div>
+        <div class="metric-divider"></div>
+        <div class="metric-item">
+          <span class="metric-value font-mono">100% Vector</span>
+          <span class="metric-label">0 Scraped Media / Fair Use</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container main-content-flow">
+    <!-- Empty Data State / Pipeline Compiling Banner -->
+    {!hasModels && <PipelineCompilingBanner />}
+
+    <!-- Franchise Selection Pillars -->
+    <section class="franchise-pillars-section">
+      <div class="section-title-wrap">
+        <h2 class="section-heading">Browse by Franchise</h2>
+        <p class="section-sub">Select a pillar to view model-level median curves and condition matrices.</p>
+      </div>
+
+      <div class="pillars-grid">
+        <!-- Kamen Rider Card -->
+        <a href="/kamen-rider/" class="pillar-card card">
+          <div class="pillar-content">
+            <span class="pillar-tag">FLAGSHIP VERTICAL</span>
+            <h3 class="pillar-name">Kamen Rider</h3>
+            <p class="pillar-desc">
+              DX Henshin belts, CSM (Complete Selection Modification), Memorial Edition replicas, and S.H.Figuarts Shinkocchou Seihou.
+            </p>
+            <div class="pillar-features">
+              <span>• Heisei &amp; Reiwa eras</span>
+              <span>• Geats, Decade, Kuuga, Gotchard</span>
+            </div>
+          </div>
+          <div class="pillar-footer">
+            <span class="pillar-action">Open Kamen Rider Hub →</span>
+          </div>
+        </a>
+
+        <!-- Ultraman Card -->
+        <a href="/ultraman/" class="pillar-card card">
+          <div class="pillar-content">
+            <span class="pillar-tag">CLASSIC &amp; MODERN</span>
+            <h3 class="pillar-name">Ultraman</h3>
+            <p class="pillar-desc">
+              Ultra Replica henshin devices, S.H.Figuarts, Bullmark vintage chogokin, and Kaiju sofubi vinyls.
+            </p>
+            <div class="pillar-features">
+              <span>• Showa, Heisei &amp; New Generation</span>
+              <span>• Tiga, Zero, Seven, Blazar</span>
+            </div>
+          </div>
+          <div class="pillar-footer">
+            <span class="pillar-action">Open Ultraman Hub →</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Top Movers / Flagship Index Models -->
+    {hasModels && (
+      <section class="top-movers-section">
+        <div class="section-title-wrap">
+          <h2 class="section-heading">Top Movers &amp; Flagship Belts (30-Day Velocity)</h2>
+          <p class="section-sub">Highest secondary transaction volumes recorded across Tokyo flea markets.</p>
+        </div>
+
+        <div class="movers-grid">
+          {topMovers.map(model => (
+            <ModelCard model={model} />
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Retention Wedge: Collection Tracker Callout -->
+    <section class="watchlist-teaser-card card">
+      <div class="teaser-content">
+        <div class="teaser-tag">FREE COLLECTOR PORTFOLIO</div>
+        <h3 class="teaser-heading">Track Your Tokusatsu Collection Valuation</h3>
+        <p class="teaser-desc">
+          Add the belts and figures you own to your TokuPrice Watchlist. We automatically compute your collection's live fair-market value in JPY and USD using daily Tokyo sold medians. Saved privately in your browser.
+        </p>
+        <div class="teaser-actions">
+          <a href="/watchlist/" class="btn btn-primary">
+            Open Collection Watchlist
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Compliance & Methodology Trust Block -->
+    <MethodologyNote />
+  </div>
+</Layout>
+
+<style>
+  .hero-section {
+    background: linear-gradient(180deg, #f1f5f9 0%, var(--surface-base) 100%);
+    border-bottom: 1px solid var(--border-default);
+    padding: 3.5rem 0 3rem;
+  }
+
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+  }
+
+  .hero-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero-freshness {
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+    background-color: var(--surface-raised);
+    padding: 0.25rem 0.625rem;
+    border-radius: var(--rounded-pill);
+    border: 1px solid var(--border-default);
+  }
+
+  .hero-headline {
+    font-size: 2.75rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    max-width: 820px;
+  }
+
+  .text-accent {
+    color: var(--action-primary);
+  }
+
+  .hero-subhead {
+    font-size: 1.0625rem;
+    color: var(--text-muted);
+    max-width: 760px;
+    line-height: 1.6;
+  }
+
+  .hero-action-row {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  .hero-metrics-strip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    background-color: var(--surface-raised);
+    border: 1px solid var(--border-default);
+    border-radius: var(--rounded-card);
+    padding: 1rem 1.75rem;
+    margin-top: 1rem;
+    box-shadow: var(--elevation-card);
+  }
+
+  .metric-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+  }
+
+  .metric-value {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .metric-label {
+    font-size: 0.6875rem;
+    color: var(--text-muted);
+  }
+
+  .metric-divider {
+    width: 1px;
+    height: 32px;
+    background-color: var(--border-default);
+  }
+
+  .main-content-flow {
+    padding-top: 3rem;
+    padding-bottom: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .section-title-wrap {
+    margin-bottom: 1.5rem;
+  }
+
+  .section-heading {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    margin-bottom: 0.375rem;
+  }
+
+  .section-sub {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+  }
+
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .pillar-card {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.5rem;
+    background-color: var(--surface-raised);
+    border: 1px solid var(--border-default);
+    border-radius: var(--rounded-card);
+    transition: transform var(--duration-feedback) var(--ease-out),
+                box-shadow var(--duration-feedback) var(--ease-out),
+                border-color var(--duration-feedback) var(--ease-out);
+  }
+
+  .pillar-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--action-primary);
+    box-shadow: var(--elevation-raised);
+  }
+
+  .pillar-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .pillar-tag {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: var(--action-primary);
+    letter-spacing: 0.08em;
+  }
+
+  .pillar-name {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+  }
+
+  .pillar-desc {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .pillar-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    color: var(--text-subtle);
+    margin-top: 0.25rem;
+  }
+
+  .pillar-footer {
+    border-top: 1px solid var(--border-default);
+    padding-top: 1rem;
+  }
+
+  .pillar-action {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--action-primary);
+  }
+
+  .movers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .watchlist-teaser-card {
+    padding: 2.25rem;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #ffffff;
+    border-radius: var(--rounded-card);
+  }
+
+  .teaser-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-width: 680px;
+  }
+
+  .teaser-tag {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: #ff7a45;
+    letter-spacing: 0.08em;
+  }
+
+  .teaser-heading {
+    font-size: 1.5rem;
+    color: #ffffff;
+  }
+
+  .teaser-desc {
+    font-size: 0.875rem;
+    color: #94a3b8;
+    line-height: 1.6;
+  }
+
+  .teaser-actions {
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 860px) {
+    .hero-headline {
+      font-size: 2rem;
+    }
+
+    .pillars-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .movers-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .metric-divider {
+      display: none;
+    }
+
+    .hero-metrics-strip {
+      gap: 1rem;
+    }
+  }
+</style>

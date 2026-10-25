@@ -1,0 +1,366 @@
+---
+// src/components/TrackAlertModal.astro
+---
+
+<div id="track-alert-modal" class="modal-overlay" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-card card">
+    <button type="button" class="modal-close" id="modal-close-btn" aria-label="Close modal">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 6L6 18M6 6l12 12" />
+      </svg>
+    </button>
+
+    <div class="modal-header">
+      <span class="badge badge-cib" id="modal-condition-badge">Complete in Box</span>
+      <h3 id="modal-title" class="modal-heading">Set Tokyo Price-Drop Alert</h3>
+      <p class="modal-sub">
+        Get instant sub-minute notifications when <strong id="modal-model-name">this model</strong> drops below your target price on Japanese flea markets.
+      </p>
+    </div>
+
+    <form id="track-alert-form" class="alert-form">
+      <input type="hidden" id="alert-model-slug" name="slug" />
+      <input type="hidden" id="alert-condition" name="condition" />
+
+      <div class="form-row">
+        <label for="target-price-input" class="form-label">
+          Target Price (JPY ¥)
+          <span class="label-hint">Current Tokyo Median: <strong id="modal-current-price">¥—</strong></span>
+        </label>
+        <div class="input-with-symbol">
+          <span class="input-symbol">¥</span>
+          <input 
+            type="number" 
+            id="target-price-input" 
+            name="targetPrice" 
+            class="form-input font-mono" 
+            placeholder="e.g. 7000" 
+            min="500" 
+            step="100" 
+            required 
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label for="alert-email-input" class="form-label">
+          Notification Email
+        </label>
+        <input 
+          type="email" 
+          id="alert-email-input" 
+          name="email" 
+          class="form-input" 
+          placeholder="collector@example.com" 
+          autocomplete="email"
+          required 
+        />
+      </div>
+
+      <div class="pro-funnel-dock">
+        <div class="pro-tag">TOKU-PRICE PRO SNIPER</div>
+        <div class="pro-headline">Sub-30-Second Tokyo Flea Market Snipes</div>
+        <p class="pro-desc">
+          We scan Mercari, Yahoo! Auctions, and Rakuma 24/7. When an under-priced listing appears, Pro subscribers beat the proxy bots.
+        </p>
+        <div class="pro-price tabular">
+          <span>¥2,980/month</span>
+          <span class="pro-price-sub">(~$19.80 USD) • 7-day free trial</span>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary btn-block">
+          Activate Price Drop Alert
+        </button>
+      </div>
+    </form>
+
+    <div id="alert-success-state" style="display: none;" class="success-box">
+      <div class="success-icon">✓</div>
+      <h4>Price Alert Armed</h4>
+      <p id="success-message">
+        We've registered your alert. You will be notified the instant a matching Tokyo listing is detected.
+      </p>
+      <button type="button" class="btn btn-ghost btn-sm" id="success-close-btn">
+        Done
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .modal-card {
+    background-color: var(--surface-raised);
+    width: 100%;
+    max-width: 480px;
+    padding: 2rem;
+    position: relative;
+    border: 1px solid var(--border-default);
+    box-shadow: var(--elevation-overlay);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    color: var(--text-muted);
+    padding: 0.375rem;
+    border-radius: var(--rounded-control);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-close:hover {
+    color: var(--text-primary);
+    background-color: var(--surface-sunken);
+  }
+
+  .modal-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .modal-heading {
+    font-size: 1.25rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.375rem;
+  }
+
+  .modal-sub {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  .alert-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  .form-label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .label-hint {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--text-muted);
+  }
+
+  .input-with-symbol {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .input-symbol {
+    position: absolute;
+    left: 0.875rem;
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  .input-with-symbol .form-input {
+    padding-left: 2rem;
+  }
+
+  .form-input {
+    width: 100%;
+    height: 42px;
+    border: 1px solid var(--border-default);
+    border-radius: var(--rounded-control);
+    padding: 0.5rem 0.875rem;
+    font-size: 0.9375rem;
+    background-color: var(--surface-raised);
+    color: var(--text-primary);
+    transition: border-color var(--duration-feedback) var(--ease-out);
+  }
+
+  .form-input:focus {
+    border-color: var(--action-primary);
+    outline: 2px solid rgba(217, 72, 15, 0.2);
+  }
+
+  .pro-funnel-dock {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border: 1px solid rgba(217, 72, 15, 0.3);
+    border-radius: var(--rounded-control);
+    padding: 1rem;
+    color: #ffffff;
+  }
+
+  .pro-tag {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: #ff7a45;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.25rem;
+  }
+
+  .pro-headline {
+    font-size: 0.875rem;
+    font-weight: 700;
+    margin-bottom: 0.375rem;
+    color: #ffffff;
+  }
+
+  .pro-desc {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+  }
+
+  .pro-price {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: #ffffff;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .pro-price-sub {
+    font-size: 0.6875rem;
+    font-weight: 400;
+    color: #94a3b8;
+  }
+
+  .btn-block {
+    width: 100%;
+  }
+
+  .success-box {
+    text-align: center;
+    padding: 1.5rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .success-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--state-success-surface);
+    color: var(--state-success);
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .success-box h4 {
+    font-size: 1.125rem;
+    color: var(--text-primary);
+  }
+
+  .success-box p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    max-width: 340px;
+  }
+</style>
+
+<script is:inline>
+  (function() {
+    const modal = document.getElementById('track-alert-modal');
+    const closeBtn = document.getElementById('modal-close-btn');
+    const form = document.getElementById('track-alert-form');
+    const successState = document.getElementById('alert-success-state');
+    const successCloseBtn = document.getElementById('success-close-btn');
+
+    const modelNameEl = document.getElementById('modal-model-name');
+    const conditionBadgeEl = document.getElementById('modal-condition-badge');
+    const currentPriceEl = document.getElementById('modal-current-price');
+    const targetPriceInput = document.getElementById('target-price-input');
+    const modelSlugInput = document.getElementById('alert-model-slug');
+    const conditionInput = document.getElementById('alert-condition');
+
+    window.openTrackAlert = function(params) {
+      if (!modal) return;
+      const { slug, name, condition, conditionLabel, medianJpy, medianUsd } = params || {};
+      
+      if (modelSlugInput) modelSlugInput.value = slug || '';
+      if (conditionInput) conditionInput.value = condition || 'cib';
+      if (modelNameEl) modelNameEl.textContent = name || 'Tokusatsu Item';
+      if (conditionBadgeEl) {
+        conditionBadgeEl.textContent = conditionLabel || 'Complete in Box';
+        conditionBadgeEl.className = `badge badge-${condition === 'new_sealed' ? 'sealed' : condition === 'used' ? 'used' : 'cib'}`;
+      }
+      if (currentPriceEl) {
+        currentPriceEl.textContent = medianJpy ? `¥${medianJpy.toLocaleString()}` : '—';
+      }
+      if (targetPriceInput && medianJpy) {
+        // Default target is ~10% under current median
+        targetPriceInput.value = Math.floor((medianJpy * 0.9) / 100) * 100;
+      }
+
+      form.style.display = 'flex';
+      successState.style.display = 'none';
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      if (targetPriceInput) targetPriceInput.focus();
+    };
+
+    function closeModal() {
+      if (!modal) return;
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (successCloseBtn) successCloseBtn.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.style.display === 'flex') {
+        closeModal();
+      }
+    });
+
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const data = {
+          slug: modelSlugInput.value,
+          name: modelNameEl.textContent,
+          condition: conditionInput.value,
+          targetPrice: targetPriceInput.value,
+          email: document.getElementById('alert-email-input').value,
+          createdAt: new Date().toISOString()
+        };
+
+        try {
+          const existing = JSON.parse(localStorage.getItem('tokuprice_alerts') || '[]');
+          existing.push(data);
+          localStorage.setItem('tokuprice_alerts', JSON.stringify(existing));
+        } catch (err) {}
+
+        form.style.display = 'none';
+        successState.style.display = 'flex';
+      });
+    }
+  })();
+</script>

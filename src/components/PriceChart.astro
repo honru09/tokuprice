@@ -1,0 +1,541 @@
+---
+// src/components/PriceChart.astro
+import type { ModelData, TimeSeriesPoint } from '../lib/data';
+import { formatJpy } from '../lib/data';
+
+interface Props {
+  model: ModelData;
+}
+
+const { model } = Astro.props;
+const { timeSeries } = model;
+
+// Prepare initial 30D dataset for SSR fallback
+const initialPoints = timeSeries?.days30?.length ? timeSeries.days30 : [];
+---
+
+<div class="price-chart-card card" id="toku-chart-container">
+  <div class="chart-header">
+    <div class="chart-title-group">
+      <h3 class="chart-title">Tokyo Historical Sold Price Velocity</h3>
+      <div class="chart-legend">
+        <span class="legend-item"><span class="legend-dot sealed-dot"></span>Sealed</span>
+        <span class="legend-item"><span class="legend-dot cib-dot"></span>CIB</span>
+        <span class="legend-item"><span class="legend-dot loose-dot"></span>Loose</span>
+      </div>
+    </div>
+
+    <div class="timeframe-selector" role="radiogroup" aria-label="Chart Timeframe">
+      <button type="button" class="timeframe-btn active" data-timeframe="days30">30D</button>
+      <button type="button" class="timeframe-btn" data-timeframe="days90">90D</button>
+      <button type="button" class="timeframe-btn" data-timeframe="year1">1Y</button>
+      <button type="button" class="timeframe-btn" data-timeframe="all">ALL</button>
+    </div>
+  </div>
+
+  <div class="chart-canvas-wrapper">
+    <!-- SVG Chart Stage (ViewBox: 800 x 300) -->
+    <svg 
+      id="toku-price-svg" 
+      viewBox="0 0 800 300" 
+      preserveAspectRatio="none" 
+      class="chart-svg"
+      aria-label="Historical price chart"
+    >
+      <defs>
+        <linearGradient id="cib-gradient" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1d4ed8" stop-opacity="0.15" />
+          <stop offset="100%" stop-color="#1d4ed8" stop-opacity="0.0" />
+        </linearGradient>
+      </defs>
+
+      <!-- Grid lines -->
+      <g id="chart-grid-lines" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3 3">
+        <line x1="50" y1="50" x2="770" y2="50" />
+        <line x1="50" y1="110" x2="770" y2="110" />
+        <line x1="50" y1="170" x2="770" y2="170" />
+        <line x1="50" y1="230" x2="770" y2="230" />
+      </g>
+
+      <!-- Y-Axis Labels -->
+      <g id="chart-y-labels" font-family="'JetBrains Mono', monospace" font-size="11" fill="#94a3b8">
+        <!-- populated dynamically -->
+      </g>
+
+      <!-- Volume Bars (Bottom Track, y: 220 to 270) -->
+      <g id="chart-volume-bars" fill="#cbd5e1" opacity="0.6">
+        <!-- populated dynamically -->
+      </g>
+
+      <!-- Price Paths -->
+      <path id="path-cib-area" fill="url(#cib-gradient)" d="" />
+      <path id="path-sealed" stroke="var(--grade-sealed)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" d="" />
+      <path id="path-cib" stroke="var(--grade-cib)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" d="" />
+      <path id="path-loose" stroke="var(--grade-used)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" d="" />
+
+      <!-- Hover Crosshair -->
+      <g id="chart-crosshair" style="display: none;">
+        <line id="crosshair-x" x1="0" y1="30" x2="0" y2="260" stroke="#0f172a" stroke-width="1" stroke-dasharray="2 2" />
+        <circle id="crosshair-dot-sealed" cx="0" cy="0" r="4" fill="var(--grade-sealed)" stroke="#ffffff" stroke-width="2" />
+        <circle id="crosshair-dot-cib" cx="0" cy="0" r="5" fill="var(--grade-cib)" stroke="#ffffff" stroke-width="2" />
+        <circle id="crosshair-dot-loose" cx="0" cy="0" r="4" fill="var(--grade-used)" stroke="#ffffff" stroke-width="2" />
+      </g>
+
+      <!-- Overlay for pointer interaction -->
+      <rect 
+        id="chart-overlay-rect" 
+        x="50" 
+        y="20" 
+        width="720" 
+        height="260" 
+        fill="transparent" 
+        cursor="crosshair"
+      />
+    </svg>
+
+    <!-- Floating Dark Tooltip Chip per DESIGN.md §7.3 -->
+    <div id="chart-tooltip" class="chart-tooltip-chip" style="display: none;">
+      <div class="tooltip-date tabular" id="tooltip-date">2026-10-25</div>
+      <div class="tooltip-metrics">
+        <div class="tooltip-row">
+          <span class="legend-dot sealed-dot"></span>
+          <span class="tooltip-label">Sealed:</span>
+          <strong class="tabular" id="tooltip-sealed">¥—</strong>
+        </div>
+        <div class="tooltip-row">
+          <span class="legend-dot cib-dot"></span>
+          <span class="tooltip-label">CIB Median:</span>
+          <strong class="tabular" id="tooltip-cib">¥—</strong>
+        </div>
+        <div class="tooltip-row">
+          <span class="legend-dot loose-dot"></span>
+          <span class="tooltip-label">Loose:</span>
+          <strong class="tabular" id="tooltip-loose">¥—</strong>
+        </div>
+        <div class="tooltip-row tooltip-vol-row">
+          <span class="tooltip-label">Volume:</span>
+          <strong class="tabular" id="tooltip-vol">0 sales</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-footer">
+    <span class="chart-source-note">
+      Daily median prices calculated from confirmed completed transactions across Mercari Japan &amp; Yahoo! Auctions.
+    </span>
+    <span class="chart-subtrack-label tabular">Bottom histogram: transaction count</span>
+  </div>
+
+  <!-- Raw Series Payload -->
+  <script type="application/json" id="chart-series-payload">
+    {JSON.stringify(timeSeries || {})}
+  </script>
+</div>
+
+<style>
+  .price-chart-card {
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .chart-title-group {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+  }
+
+  .chart-title {
+    font-size: 1.125rem;
+    color: var(--text-primary);
+  }
+
+  .chart-legend {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .sealed-dot { background-color: var(--grade-sealed); }
+  .cib-dot { background-color: var(--grade-cib); }
+  .loose-dot { background-color: var(--grade-used); }
+
+  .timeframe-selector {
+    display: inline-flex;
+    background-color: var(--surface-sunken);
+    padding: 0.25rem;
+    border-radius: var(--rounded-control);
+    border: 1px solid var(--border-default);
+  }
+
+  .timeframe-btn {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+    border-radius: calc(var(--rounded-control) - 2px);
+    transition: all var(--duration-feedback) var(--ease-out);
+  }
+
+  .timeframe-btn:hover {
+    color: var(--text-primary);
+  }
+
+  .timeframe-btn.active {
+    background-color: var(--surface-raised);
+    color: var(--text-primary);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+
+  .chart-canvas-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 260px;
+  }
+
+  .chart-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+  }
+
+  .chart-tooltip-chip {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #0f172a;
+    color: #ffffff;
+    border-radius: var(--rounded-badge);
+    padding: 0.625rem 0.875rem;
+    font-size: 0.75rem;
+    box-shadow: var(--elevation-overlay);
+    pointer-events: none;
+    z-index: 20;
+    min-width: 160px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .tooltip-date {
+    font-size: 0.6875rem;
+    color: #94a3b8;
+    margin-bottom: 0.375rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding-bottom: 0.25rem;
+  }
+
+  .tooltip-metrics {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .tooltip-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .tooltip-label {
+    color: #cbd5e1;
+  }
+
+  .tooltip-vol-row {
+    border-top: 1px dashed rgba(255, 255, 255, 0.15);
+    padding-top: 0.25rem;
+    margin-top: 0.25rem;
+  }
+
+  .chart-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: 0.6875rem;
+    color: var(--text-subtle);
+    border-top: 1px solid var(--border-default);
+    padding-top: 0.75rem;
+  }
+
+  @media (max-width: 640px) {
+    .price-chart-card {
+      padding: 1rem;
+    }
+
+    .chart-title-group {
+      gap: 0.75rem;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function() {
+    const container = document.getElementById('toku-chart-container');
+    if (!container) return;
+
+    let seriesData = {};
+    try {
+      const payloadEl = document.getElementById('chart-series-payload');
+      if (payloadEl) seriesData = JSON.parse(payloadEl.textContent || '{}');
+    } catch (e) {}
+
+    const timeframeButtons = container.querySelectorAll('.timeframe-btn');
+    const pathSealed = document.getElementById('path-sealed');
+    const pathCib = document.getElementById('path-cib');
+    const pathLoose = document.getElementById('path-loose');
+    const pathCibArea = document.getElementById('path-cib-area');
+    const volumeBarsGroup = document.getElementById('chart-volume-bars');
+    const yLabelsGroup = document.getElementById('chart-y-labels');
+    const overlay = document.getElementById('chart-overlay-rect');
+    const crosshair = document.getElementById('chart-crosshair');
+    const crosshairX = document.getElementById('crosshair-x');
+    const dotSealed = document.getElementById('crosshair-dot-sealed');
+    const dotCib = document.getElementById('crosshair-dot-cib');
+    const dotLoose = document.getElementById('crosshair-dot-loose');
+    const tooltip = document.getElementById('chart-tooltip');
+
+    const tooltipDate = document.getElementById('tooltip-date');
+    const tooltipSealed = document.getElementById('tooltip-sealed');
+    const tooltipCib = document.getElementById('tooltip-cib');
+    const tooltipLoose = document.getElementById('tooltip-loose');
+    const tooltipVol = document.getElementById('tooltip-vol');
+
+    let currentPoints = seriesData.days30 || [];
+    let currentScale = { minPrice: 0, maxPrice: 10000, maxVol: 10, minX: 60, maxX: 760, minY: 35, maxY: 210, volBaseY: 265, volMaxH: 40 };
+
+    function renderTimeframe(tfKey) {
+      currentPoints = seriesData[tfKey] || seriesData.days30 || [];
+      if (!currentPoints.length) {
+        pathSealed.setAttribute('d', '');
+        pathCib.setAttribute('d', '');
+        pathLoose.setAttribute('d', '');
+        pathCibArea.setAttribute('d', '');
+        volumeBarsGroup.innerHTML = '';
+        yLabelsGroup.innerHTML = '<text x="60" y="140" fill="#94a3b8">No historical transaction points recorded.</text>';
+        return;
+      }
+
+      // Calculate price and volume bounds
+      let minP = Infinity;
+      let maxP = -Infinity;
+      let maxV = 1;
+
+      currentPoints.forEach(p => {
+        if (p.volume > maxV) maxV = p.volume;
+        const vals = [p.medianJpy, p.byGrade?.sealed, p.byGrade?.cib, p.byGrade?.loose].filter(v => typeof v === 'number' && v > 0);
+        vals.forEach(v => {
+          if (v < minP) minP = v;
+          if (v > maxP) maxP = v;
+        });
+      });
+
+      if (minP === Infinity) { minP = 1000; maxP = 10000; }
+      // Round min/max to friendly intervals
+      const range = maxP - minP || 1000;
+      minP = Math.max(0, Math.floor((minP - range * 0.1) / 1000) * 1000);
+      maxP = Math.ceil((maxP + range * 0.1) / 1000) * 1000;
+
+      currentScale.minPrice = minP;
+      currentScale.maxPrice = maxP;
+      currentScale.maxVol = maxV;
+
+      // Render Y labels
+      yLabelsGroup.innerHTML = '';
+      const step = (maxP - minP) / 3;
+      for (let i = 0; i <= 3; i++) {
+        const pVal = Math.round(minP + step * (3 - i));
+        const y = currentScale.minY + (currentScale.maxY - currentScale.minY) * (i / 3);
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', '45');
+        text.setAttribute('y', y + 4);
+        text.setAttribute('text-anchor', 'end');
+        text.textContent = '¥' + pVal.toLocaleString();
+        yLabelsGroup.appendChild(text);
+      }
+
+      // Compute coordinate helper
+      const getX = (idx) => {
+        if (currentPoints.length <= 1) return (currentScale.minX + currentScale.maxX) / 2;
+        return currentScale.minX + (currentScale.maxX - currentScale.minX) * (idx / (currentPoints.length - 1));
+      };
+
+      const getY = (val) => {
+        if (!val) return null;
+        const norm = (val - minP) / (maxP - minP);
+        return currentScale.maxY - norm * (currentScale.maxY - currentScale.minY);
+      };
+
+      // Build paths
+      let dSealed = '';
+      let dCib = '';
+      let dLoose = '';
+      let dArea = '';
+
+      currentPoints.forEach((p, idx) => {
+        const x = getX(idx);
+        const yCib = getY(p.byGrade?.cib || p.medianJpy);
+        const ySealed = getY(p.byGrade?.sealed);
+        const yLoose = getY(p.byGrade?.loose);
+
+        if (yCib !== null) {
+          dCib += (dCib ? ' L ' : 'M ') + `${x.toFixed(1)} ${yCib.toFixed(1)}`;
+        }
+        if (ySealed !== null) {
+          dSealed += (dSealed ? ' L ' : 'M ') + `${x.toFixed(1)} ${ySealed.toFixed(1)}`;
+        }
+        if (yLoose !== null) {
+          dLoose += (dLoose ? ' L ' : 'M ') + `${x.toFixed(1)} ${yLoose.toFixed(1)}`;
+        }
+      });
+
+      if (dCib && currentPoints.length > 1) {
+        const firstX = getX(0);
+        const lastX = getX(currentPoints.length - 1);
+        dArea = `${dCib} L ${lastX.toFixed(1)} ${currentScale.volBaseY} L ${firstX.toFixed(1)} ${currentScale.volBaseY} Z`;
+      }
+
+      pathSealed.setAttribute('d', dSealed);
+      pathCib.setAttribute('d', dCib);
+      pathLoose.setAttribute('d', dLoose);
+      pathCibArea.setAttribute('d', dArea);
+
+      // Render Volume Bars
+      volumeBarsGroup.innerHTML = '';
+      const barWidth = Math.max(4, Math.min(24, (currentScale.maxX - currentScale.minX) / currentPoints.length - 4));
+      currentPoints.forEach((p, idx) => {
+        const x = getX(idx) - barWidth / 2;
+        const barH = (p.volume / maxV) * currentScale.volMaxH;
+        const y = currentScale.volBaseY - barH;
+
+        const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        rect.setAttribute('x', x.toFixed(1));
+        rect.setAttribute('y', y.toFixed(1));
+        rect.setAttribute('width', barWidth.toFixed(1));
+        rect.setAttribute('height', Math.max(2, barH).toFixed(1));
+        rect.setAttribute('rx', '2');
+        volumeBarsGroup.appendChild(rect);
+      });
+    }
+
+    // Timeframe selector click
+    timeframeButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        timeframeButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderTimeframe(btn.getAttribute('data-timeframe'));
+      });
+    });
+
+    // Pointer hover interaction
+    if (overlay) {
+      overlay.addEventListener('mousemove', (e) => {
+        if (!currentPoints.length) return;
+        const rect = overlay.getBoundingClientRect();
+        const svgW = 800;
+        const relX = ((e.clientX - rect.left) / rect.width) * svgW;
+
+        // Find nearest point
+        let nearestIdx = 0;
+        let nearestDist = Infinity;
+        currentPoints.forEach((p, idx) => {
+          const ptX = currentPoints.length <= 1 
+            ? (currentScale.minX + currentScale.maxX) / 2
+            : currentScale.minX + (currentScale.maxX - currentScale.minX) * (idx / (currentPoints.length - 1));
+          const dist = Math.abs(relX - ptX);
+          if (dist < nearestDist) {
+            nearestDist = dist;
+            nearestIdx = idx;
+          }
+        });
+
+        const pt = currentPoints[nearestIdx];
+        const ptX = currentPoints.length <= 1 
+          ? (currentScale.minX + currentScale.maxX) / 2
+          : currentScale.minX + (currentScale.maxX - currentScale.minX) * (nearestIdx / (currentPoints.length - 1));
+
+        const normY = (val) => {
+          if (!val) return null;
+          const ratio = (val - currentScale.minPrice) / (currentScale.maxPrice - currentScale.minPrice);
+          return currentScale.maxY - ratio * (currentScale.maxY - currentScale.minY);
+        };
+
+        const yC = normY(pt.byGrade?.cib || pt.medianJpy);
+        const yS = normY(pt.byGrade?.sealed);
+        const yL = normY(pt.byGrade?.loose);
+
+        // Update crosshair
+        crosshair.style.display = 'inline';
+        crosshairX.setAttribute('x1', ptX.toFixed(1));
+        crosshairX.setAttribute('x2', ptX.toFixed(1));
+
+        if (yC !== null) {
+          dotCib.style.display = 'inline';
+          dotCib.setAttribute('cx', ptX.toFixed(1));
+          dotCib.setAttribute('cy', yC.toFixed(1));
+        } else dotCib.style.display = 'none';
+
+        if (yS !== null) {
+          dotSealed.style.display = 'inline';
+          dotSealed.setAttribute('cx', ptX.toFixed(1));
+          dotSealed.setAttribute('cy', yS.toFixed(1));
+        } else dotSealed.style.display = 'none';
+
+        if (yL !== null) {
+          dotLoose.style.display = 'inline';
+          dotLoose.setAttribute('cx', ptX.toFixed(1));
+          dotLoose.setAttribute('cy', yL.toFixed(1));
+        } else dotLoose.style.display = 'none';
+
+        // Update tooltip
+        tooltipDate.textContent = pt.date;
+        tooltipSealed.textContent = pt.byGrade?.sealed ? '¥' + pt.byGrade.sealed.toLocaleString() : '—';
+        tooltipCib.textContent = (pt.byGrade?.cib || pt.medianJpy) ? '¥' + (pt.byGrade?.cib || pt.medianJpy).toLocaleString() : '—';
+        tooltipLoose.textContent = pt.byGrade?.loose ? '¥' + pt.byGrade.loose.toLocaleString() : '—';
+        tooltipVol.textContent = `${pt.volume} sold`;
+
+        // Tooltip position (relative to chart container)
+        const clientX = e.clientX - container.getBoundingClientRect().left;
+        const clampLeft = Math.max(10, Math.min(container.clientWidth - 180, clientX + 15));
+        tooltip.style.left = `${clampLeft}px`;
+        tooltip.style.display = 'block';
+      });
+
+      overlay.addEventListener('mouseleave', () => {
+        crosshair.style.display = 'none';
+        tooltip.style.display = 'none';
+      });
+    }
+
+    // Initial render
+    renderTimeframe('days30');
+  })();
+</script>

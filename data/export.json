@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "pipelineStatus": "compiling",
+  "pipelineMessage": "Automated data aggregation pipeline is compiling verified Tokyo sold data for 250+ flagship Kamen Rider and Ultraman models. The next scheduled batch will publish full model-level medians directly from Mercari, Yahoo! Auctions, Mandarake, and Suruga-ya.",
+  "lastExportAt": "2026-10-25T12:00:00Z",
+  "exchangeRateUsdJpy": 149.80,
+  "exchangeRateDate": "2026-10-25",
+  "platformsTracked": [
+    "Mercari Japan",
+    "Yahoo! Auctions Japan",
+    "Rakuma",
+    "Mandarake Kaitori & Archive",
+    "Suruga-ya"
+  ],
+  "models": []
+}

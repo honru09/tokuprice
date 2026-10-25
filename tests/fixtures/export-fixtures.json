@@ -1,0 +1,443 @@
+{
+  "version": "1.0.0-fixtures",
+  "pipelineStatus": "ready",
+  "pipelineMessage": "QA and Break-UI Stress Test Fixtures Suite",
+  "lastExportAt": "2026-10-25T12:00:00Z",
+  "exchangeRateUsdJpy": 149.80,
+  "exchangeRateDate": "2026-10-25",
+  "platformsTracked": [
+    "Mercari Japan",
+    "Yahoo! Auctions Japan",
+    "Rakuma",
+    "Mandarake Kaitori & Archive",
+    "Suruga-ya"
+  ],
+  "models": [
+    {
+      "slug": "dx-desire-driver",
+      "canonicalSlug": "kamen-rider/geats/dx-desire-driver",
+      "canonicalNameEn": "DX Desire Driver",
+      "canonicalNameJa": "変身ベルト DXデザイアドライバー",
+      "romaji": "DX Desire Driver",
+      "aliases": ["Geats Driver", "Desire Driver", "DX Geats Belt"],
+      "franchise": "kamen_rider",
+      "franchiseNameEn": "Kamen Rider",
+      "series": "geats",
+      "seriesNameEn": "Kamen Rider Geats",
+      "toyType": "dx_belt",
+      "manufacturer": "Bandai",
+      "releaseYear": 2022,
+      "originalMsrpJpy": 7920,
+      "metrics": {
+        "overall": {
+          "medianPriceJpy": 8400,
+          "medianPriceUsd": 56.08,
+          "priceRangeMinJpy": 4500,
+          "priceRangeMaxJpy": 13800,
+          "soldVolume30d": 46,
+          "soldVolume90d": 128,
+          "priceTrendPct30d": 12.4,
+          "averageSellHours": 38.5
+        },
+        "byCondition": {
+          "new_sealed": {
+            "medianPriceJpy": 12500,
+            "medianPriceUsd": 83.44,
+            "priceMinJpy": 11000,
+            "priceMaxJpy": 14800,
+            "soldVolume30d": 12
+          },
+          "like_new": {
+            "medianPriceJpy": 8400,
+            "medianPriceUsd": 56.08,
+            "priceMinJpy": 7500,
+            "priceMaxJpy": 9500,
+            "soldVolume30d": 24
+          },
+          "used": {
+            "medianPriceJpy": 4800,
+            "medianPriceUsd": 32.04,
+            "priceMinJpy": 3800,
+            "priceMaxJpy": 5800,
+            "soldVolume30d": 10
+          },
+          "damaged_or_junk": {
+            "medianPriceJpy": 2200,
+            "medianPriceUsd": 14.69,
+            "soldVolume30d": 5,
+            "note": "Floor parts value. Excluded from functional medians."
+          }
+        },
+        "marketSpread": {
+          "japanDomesticC2cMedianJpy": 8400,
+          "japanShopBuybackFloorJpy": 5200,
+          "westernEbayAvgUsd": 92.50,
+          "arbitrageOpportunityUsd": 36.42
+        }
+      },
+      "timeSeries": {
+        "days30": [
+          { "date": "2026-09-26", "medianJpy": 7500, "volume": 3, "byGrade": { "sealed": 11200, "cib": 7500, "loose": 4300 } },
+          { "date": "2026-10-02", "medianJpy": 7800, "volume": 5, "byGrade": { "sealed": 11800, "cib": 7800, "loose": 4500 } },
+          { "date": "2026-10-09", "medianJpy": 8100, "volume": 4, "byGrade": { "sealed": 12000, "cib": 8100, "loose": 4700 } },
+          { "date": "2026-10-16", "medianJpy": 8200, "volume": 6, "byGrade": { "sealed": 12200, "cib": 8200, "loose": 4750 } },
+          { "date": "2026-10-25", "medianJpy": 8400, "volume": 8, "byGrade": { "sealed": 12500, "cib": 8400, "loose": 4800 } }
+        ],
+        "days90": [
+          { "date": "2026-07-28", "medianJpy": 7200, "volume": 12, "byGrade": { "sealed": 10500, "cib": 7200, "loose": 4100 } },
+          { "date": "2026-08-28", "medianJpy": 7600, "volume": 18, "byGrade": { "sealed": 11400, "cib": 7600, "loose": 4400 } },
+          { "date": "2026-09-28", "medianJpy": 8100, "volume": 22, "byGrade": { "sealed": 12100, "cib": 8100, "loose": 4700 } },
+          { "date": "2026-10-25", "medianJpy": 8400, "volume": 24, "byGrade": { "sealed": 12500, "cib": 8400, "loose": 4800 } }
+        ],
+        "year1": [
+          { "date": "2025-11-01", "medianJpy": 6800, "volume": 45, "byGrade": { "sealed": 9800, "cib": 6800, "loose": 3900 } },
+          { "date": "2026-02-01", "medianJpy": 7100, "volume": 38, "byGrade": { "sealed": 10200, "cib": 7100, "loose": 4000 } },
+          { "date": "2026-05-01", "medianJpy": 7500, "volume": 42, "byGrade": { "sealed": 11000, "cib": 7500, "loose": 4300 } },
+          { "date": "2026-08-01", "medianJpy": 7900, "volume": 50, "byGrade": { "sealed": 11900, "cib": 7900, "loose": 4600 } },
+          { "date": "2026-10-25", "medianJpy": 8400, "volume": 54, "byGrade": { "sealed": 12500, "cib": 8400, "loose": 4800 } }
+        ],
+        "all": [
+          { "date": "2022-09-03", "medianJpy": 7920, "volume": 95, "byGrade": { "sealed": 8500, "cib": 7500, "loose": 5500 } },
+          { "date": "2023-09-01", "medianJpy": 5200, "volume": 120, "byGrade": { "sealed": 7500, "cib": 5200, "loose": 3200 } },
+          { "date": "2024-09-01", "medianJpy": 6100, "volume": 85, "byGrade": { "sealed": 8900, "cib": 6100, "loose": 3600 } },
+          { "date": "2025-09-01", "medianJpy": 6800, "volume": 60, "byGrade": { "sealed": 9800, "cib": 6800, "loose": 3900 } },
+          { "date": "2026-10-25", "medianJpy": 8400, "volume": 46, "byGrade": { "sealed": 12500, "cib": 8400, "loose": 4800 } }
+        ]
+      }
+    },
+    {
+      "slug": "csm-decadriver-ver2-k-touch-set-memorial",
+      "canonicalSlug": "kamen-rider/decade/csm-decadriver-ver2-k-touch-set-memorial",
+      "canonicalNameEn": "CSM Complete Selection Modification Decadriver ver.2.0 & K-Touch Complete Set 20th Anniversary Premium Bandai Limited Edition Special Memorial Package",
+      "canonicalNameJa": "CSMディケイドライバーver.2＆ケータッチ プレミアムバンダイ限定スペシャルメモリアルセット",
+      "romaji": "CSM Decadriver ver.2 and K-Touch Memorial Set",
+      "aliases": ["CSM Decade 2.0", "Decadriver 2.0 Set", "K-Touch Set"],
+      "franchise": "kamen_rider",
+      "franchiseNameEn": "Kamen Rider",
+      "series": "decade",
+      "seriesNameEn": "Kamen Rider Decade",
+      "toyType": "csm",
+      "manufacturer": "Bandai Spirits",
+      "releaseYear": 2022,
+      "originalMsrpJpy": 36300,
+      "metrics": {
+        "overall": {
+          "medianPriceJpy": 48500,
+          "medianPriceUsd": 323.77,
+          "priceRangeMinJpy": 38000,
+          "priceRangeMaxJpy": 62000,
+          "soldVolume30d": 14,
+          "soldVolume90d": 39,
+          "priceTrendPct30d": -3.2,
+          "averageSellHours": 72.0
+        },
+        "byCondition": {
+          "new_sealed": {
+            "medianPriceJpy": 58000,
+            "medianPriceUsd": 387.18,
+            "priceMinJpy": 52000,
+            "priceMaxJpy": 65000,
+            "soldVolume30d": 4
+          },
+          "like_new": {
+            "medianPriceJpy": 48500,
+            "medianPriceUsd": 323.77,
+            "priceMinJpy": 43000,
+            "priceMaxJpy": 52000,
+            "soldVolume30d": 8
+          },
+          "used": {
+            "medianPriceJpy": 39000,
+            "medianPriceUsd": 260.35,
+            "priceMinJpy": 34000,
+            "priceMaxJpy": 42000,
+            "soldVolume30d": 2
+          },
+          "damaged_or_junk": {
+            "medianPriceJpy": 25000,
+            "medianPriceUsd": 166.89,
+            "soldVolume30d": 1,
+            "note": "Card reader malfunction / cosmetic scratches."
+          }
+        },
+        "marketSpread": {
+          "japanDomesticC2cMedianJpy": 48500,
+          "japanShopBuybackFloorJpy": 36000,
+          "westernEbayAvgUsd": 465.00,
+          "arbitrageOpportunityUsd": 141.23
+        }
+      },
+      "timeSeries": {
+        "days30": [
+          { "date": "2026-09-26", "medianJpy": 50000, "volume": 2, "byGrade": { "sealed": 60000, "cib": 50000, "loose": 41000 } },
+          { "date": "2026-10-08", "medianJpy": 49000, "volume": 4, "byGrade": { "sealed": 59000, "cib": 49000, "loose": 40000 } },
+          { "date": "2026-10-18", "medianJpy": 48500, "volume": 5, "byGrade": { "sealed": 58000, "cib": 48500, "loose": 39000 } },
+          { "date": "2026-10-25", "medianJpy": 48500, "volume": 3, "byGrade": { "sealed": 58000, "cib": 48500, "loose": 39000 } }
+        ],
+        "days90": [
+          { "date": "2026-07-28", "medianJpy": 52000, "volume": 10, "byGrade": { "sealed": 62000, "cib": 52000, "loose": 42000 } },
+          { "date": "2026-08-28", "medianJpy": 50500, "volume": 12, "byGrade": { "sealed": 61000, "cib": 50500, "loose": 41000 } },
+          { "date": "2026-09-28", "medianJpy": 49000, "volume": 15, "byGrade": { "sealed": 59000, "cib": 49000, "loose": 40000 } },
+          { "date": "2026-10-25", "medianJpy": 48500, "volume": 14, "byGrade": { "sealed": 58000, "cib": 48500, "loose": 39000 } }
+        ],
+        "year1": [
+          { "date": "2025-11-01", "medianJpy": 54000, "volume": 20, "byGrade": { "sealed": 64000, "cib": 54000, "loose": 43000 } },
+          { "date": "2026-03-01", "medianJpy": 52500, "volume": 25, "byGrade": { "sealed": 62500, "cib": 52500, "loose": 42000 } },
+          { "date": "2026-07-01", "medianJpy": 51000, "volume": 28, "byGrade": { "sealed": 61000, "cib": 51000, "loose": 41000 } },
+          { "date": "2026-10-25", "medianJpy": 48500, "volume": 39, "byGrade": { "sealed": 58000, "cib": 48500, "loose": 39000 } }
+        ],
+        "all": [
+          { "date": "2022-03-20", "medianJpy": 36300, "volume": 40, "byGrade": { "sealed": 42000, "cib": 36300, "loose": 28000 } },
+          { "date": "2023-03-01", "medianJpy": 44000, "volume": 55, "byGrade": { "sealed": 53000, "cib": 44000, "loose": 35000 } },
+          { "date": "2024-03-01", "medianJpy": 49000, "volume": 60, "byGrade": { "sealed": 59000, "cib": 49000, "loose": 39000 } },
+          { "date": "2025-03-01", "medianJpy": 53000, "volume": 50, "byGrade": { "sealed": 63000, "cib": 53000, "loose": 42000 } },
+          { "date": "2026-10-25", "medianJpy": 48500, "volume": 39, "byGrade": { "sealed": 58000, "cib": 48500, "loose": 39000 } }
+        ]
+      }
+    },
+    {
+      "slug": "ultra-replica-sparklence-25th",
+      "canonicalSlug": "ultraman/tiga/ultra-replica-sparklence-25th",
+      "canonicalNameEn": "Ultra Replica Sparklence 25th Anniversary ver.",
+      "canonicalNameJa": "ウルトラレプリカ スパークレンス 25th Anniversary ver.",
+      "romaji": "Ultra Replica Sparklence 25th",
+      "aliases": ["Sparklence 25th", "Tiga Henshin Device"],
+      "franchise": "ultraman",
+      "franchiseNameEn": "Ultraman",
+      "series": "tiga",
+      "seriesNameEn": "Ultraman Tiga",
+      "toyType": "replica",
+      "manufacturer": "Bandai Spirits",
+      "releaseYear": 2021,
+      "originalMsrpJpy": 11000,
+      "metrics": {
+        "overall": {
+          "medianPriceJpy": 26800,
+          "medianPriceUsd": 178.91,
+          "priceRangeMinJpy": 21000,
+          "priceRangeMaxJpy": 34000,
+          "soldVolume30d": 18,
+          "soldVolume90d": 52,
+          "priceTrendPct30d": 8.5,
+          "averageSellHours": 44.2
+        },
+        "byCondition": {
+          "new_sealed": {
+            "medianPriceJpy": 33000,
+            "medianPriceUsd": 220.29,
+            "priceMinJpy": 29000,
+            "priceMaxJpy": 36000,
+            "soldVolume30d": 5
+          },
+          "like_new": {
+            "medianPriceJpy": 26800,
+            "medianPriceUsd": 178.91,
+            "priceMinJpy": 24000,
+            "priceMaxJpy": 29000,
+            "soldVolume30d": 10
+          },
+          "used": {
+            "medianPriceJpy": 21500,
+            "medianPriceUsd": 143.52,
+            "priceMinJpy": 18000,
+            "priceMaxJpy": 23000,
+            "soldVolume30d": 3
+          },
+          "damaged_or_junk": {
+            "medianPriceJpy": 12000,
+            "medianPriceUsd": 80.11,
+            "soldVolume30d": 1,
+            "note": "Wing deployment mechanism stuck / wing hinge crack."
+          }
+        },
+        "marketSpread": {
+          "japanDomesticC2cMedianJpy": 26800,
+          "japanShopBuybackFloorJpy": 18000,
+          "westernEbayAvgUsd": 280.00,
+          "arbitrageOpportunityUsd": 101.09
+        }
+      },
+      "timeSeries": {
+        "days30": [
+          { "date": "2026-09-26", "medianJpy": 24500, "volume": 3, "byGrade": { "sealed": 31000, "cib": 24500, "loose": 20000 } },
+          { "date": "2026-10-05", "medianJpy": 25500, "volume": 5, "byGrade": { "sealed": 32000, "cib": 25500, "loose": 21000 } },
+          { "date": "2026-10-15", "medianJpy": 26200, "volume": 4, "byGrade": { "sealed": 32500, "cib": 26200, "loose": 21200 } },
+          { "date": "2026-10-25", "medianJpy": 26800, "volume": 6, "byGrade": { "sealed": 33000, "cib": 26800, "loose": 21500 } }
+        ],
+        "days90": [
+          { "date": "2026-07-28", "medianJpy": 23000, "volume": 14, "byGrade": { "sealed": 29000, "cib": 23000, "loose": 18500 } },
+          { "date": "2026-08-28", "medianJpy": 24200, "volume": 18, "byGrade": { "sealed": 30500, "cib": 24200, "loose": 19500 } },
+          { "date": "2026-09-28", "medianJpy": 25500, "volume": 20, "byGrade": { "sealed": 32000, "cib": 25500, "loose": 21000 } },
+          { "date": "2026-10-25", "medianJpy": 26800, "volume": 18, "byGrade": { "sealed": 33000, "cib": 26800, "loose": 21500 } }
+        ],
+        "year1": [
+          { "date": "2025-11-01", "medianJpy": 21000, "volume": 40, "byGrade": { "sealed": 26500, "cib": 21000, "loose": 17000 } },
+          { "date": "2026-03-01", "medianJpy": 22500, "volume": 48, "byGrade": { "sealed": 28500, "cib": 22500, "loose": 18000 } },
+          { "date": "2026-07-01", "medianJpy": 24000, "volume": 55, "byGrade": { "sealed": 30000, "cib": 24000, "loose": 19500 } },
+          { "date": "2026-10-25", "medianJpy": 26800, "volume": 52, "byGrade": { "sealed": 33000, "cib": 26800, "loose": 21500 } }
+        ],
+        "all": [
+          { "date": "2021-08-20", "medianJpy": 11000, "volume": 80, "byGrade": { "sealed": 14000, "cib": 11000, "loose": 8500 } },
+          { "date": "2022-08-01", "medianJpy": 16000, "volume": 90, "byGrade": { "sealed": 20000, "cib": 16000, "loose": 12500 } },
+          { "date": "2023-08-01", "medianJpy": 19500, "volume": 75, "byGrade": { "sealed": 24000, "cib": 19500, "loose": 15000 } },
+          { "date": "2024-08-01", "medianJpy": 22000, "volume": 65, "byGrade": { "sealed": 27500, "cib": 22000, "loose": 17500 } },
+          { "date": "2026-10-25", "medianJpy": 26800, "volume": 52, "byGrade": { "sealed": 33000, "cib": 26800, "loose": 21500 } }
+        ]
+      }
+    },
+    {
+      "slug": "vintage-rare-ultra-seven-capsule-monster-box",
+      "canonicalSlug": "ultraman/seven/vintage-rare-ultra-seven-capsule-monster-box",
+      "canonicalNameEn": "Vintage Bullmark Die-Cast Ultra Seven Capsule Monster Windam & Miclas & Agira Rare Mint Collector Set",
+      "canonicalNameJa": "ブルマァク 超合金 カプセル怪獣 ウインダム・ミクラス・アギラ 完品セット",
+      "romaji": "Bullmark Capsule Monster Set",
+      "aliases": ["Bullmark Seven", "Capsule Monsters Windam"],
+      "franchise": "ultraman",
+      "franchiseNameEn": "Ultraman",
+      "series": "seven",
+      "seriesNameEn": "Ultraseven",
+      "toyType": "chogokin",
+      "manufacturer": "Bullmark",
+      "releaseYear": 1974,
+      "originalMsrpJpy": 3800,
+      "metrics": {
+        "overall": {
+          "medianPriceJpy": 680000,
+          "medianPriceUsd": 4539.38,
+          "priceRangeMinJpy": 520000,
+          "priceRangeMaxJpy": 850000,
+          "soldVolume30d": 1,
+          "soldVolume90d": 2,
+          "priceTrendPct30d": 0.0,
+          "averageSellHours": 180.0
+        },
+        "byCondition": {
+          "new_sealed": {
+            "medianPriceJpy": null,
+            "medianPriceUsd": null,
+            "soldVolume30d": 0,
+            "note": "Zero known sealed specimens recorded in secondary archives."
+          },
+          "like_new": {
+            "medianPriceJpy": 680000,
+            "medianPriceUsd": 4539.38,
+            "priceMinJpy": 680000,
+            "priceMaxJpy": 680000,
+            "soldVolume30d": 1
+          },
+          "used": {
+            "medianPriceJpy": 420000,
+            "medianPriceUsd": 2803.74,
+            "priceMinJpy": 420000,
+            "priceMaxJpy": 420000,
+            "soldVolume30d": 1
+          },
+          "damaged_or_junk": {
+            "medianPriceJpy": 180000,
+            "medianPriceUsd": 1201.60,
+            "soldVolume30d": 0,
+            "note": "Parts only."
+          }
+        },
+        "marketSpread": {
+          "japanDomesticC2cMedianJpy": 680000,
+          "japanShopBuybackFloorJpy": 450000,
+          "westernEbayAvgUsd": 6200.00,
+          "arbitrageOpportunityUsd": 1660.62
+        }
+      },
+      "timeSeries": {
+        "days30": [
+          { "date": "2026-10-12", "medianJpy": 680000, "volume": 1, "byGrade": { "sealed": null, "cib": 680000, "loose": 420000 } }
+        ],
+        "days90": [
+          { "date": "2026-08-15", "medianJpy": 650000, "volume": 1, "byGrade": { "sealed": null, "cib": 650000, "loose": 410000 } },
+          { "date": "2026-10-12", "medianJpy": 680000, "volume": 1, "byGrade": { "sealed": null, "cib": 680000, "loose": 420000 } }
+        ],
+        "year1": [
+          { "date": "2026-02-10", "medianJpy": 620000, "volume": 1, "byGrade": { "sealed": null, "cib": 620000, "loose": 390000 } },
+          { "date": "2026-08-15", "medianJpy": 650000, "volume": 1, "byGrade": { "sealed": null, "cib": 650000, "loose": 410000 } },
+          { "date": "2026-10-12", "medianJpy": 680000, "volume": 1, "byGrade": { "sealed": null, "cib": 680000, "loose": 420000 } }
+        ],
+        "all": [
+          { "date": "2020-05-15", "medianJpy": 480000, "volume": 1, "byGrade": { "sealed": null, "cib": 480000, "loose": 310000 } },
+          { "date": "2022-09-10", "medianJpy": 550000, "volume": 2, "byGrade": { "sealed": null, "cib": 550000, "loose": 350000 } },
+          { "date": "2024-11-20", "medianJpy": 600000, "volume": 1, "byGrade": { "sealed": null, "cib": 600000, "loose": 380000 } },
+          { "date": "2026-10-12", "medianJpy": 680000, "volume": 1, "byGrade": { "sealed": null, "cib": 680000, "loose": 420000 } }
+        ]
+      }
+    },
+    {
+      "slug": "dx-x",
+      "canonicalSlug": "kamen-rider/x/dx-x",
+      "canonicalNameEn": "X",
+      "canonicalNameJa": "エックス",
+      "romaji": "X",
+      "aliases": ["Kamen Rider X"],
+      "franchise": "kamen_rider",
+      "franchiseNameEn": "Kamen Rider",
+      "series": "x",
+      "seriesNameEn": "Kamen Rider X",
+      "toyType": "figure",
+      "manufacturer": "Bandai",
+      "releaseYear": 1974,
+      "originalMsrpJpy": 1200,
+      "metrics": {
+        "overall": {
+          "medianPriceJpy": 9800,
+          "medianPriceUsd": 65.42,
+          "priceRangeMinJpy": 7500,
+          "priceRangeMaxJpy": 14000,
+          "soldVolume30d": 2,
+          "soldVolume90d": 2,
+          "priceTrendPct30d": 0.0,
+          "averageSellHours": 96.0
+        },
+        "byCondition": {
+          "new_sealed": {
+            "medianPriceJpy": null,
+            "medianPriceUsd": null,
+            "soldVolume30d": 0
+          },
+          "like_new": {
+            "medianPriceJpy": null,
+            "medianPriceUsd": null,
+            "soldVolume30d": 0
+          },
+          "used": {
+            "medianPriceJpy": 9800,
+            "medianPriceUsd": 65.42,
+            "priceMinJpy": 7500,
+            "priceMaxJpy": 12000,
+            "soldVolume30d": 2
+          },
+          "damaged_or_junk": {
+            "medianPriceJpy": null,
+            "medianPriceUsd": null,
+            "soldVolume30d": 0
+          }
+        },
+        "marketSpread": {
+          "japanDomesticC2cMedianJpy": 9800,
+          "japanShopBuybackFloorJpy": 6000,
+          "westernEbayAvgUsd": 110.00,
+          "arbitrageOpportunityUsd": 44.58
+        }
+      },
+      "timeSeries": {
+        "days30": [
+          { "date": "2026-10-05", "medianJpy": 9800, "volume": 2, "byGrade": { "sealed": null, "cib": null, "loose": 9800 } }
+        ],
+        "days90": [
+          { "date": "2026-10-05", "medianJpy": 9800, "volume": 2, "byGrade": { "sealed": null, "cib": null, "loose": 9800 } }
+        ],
+        "year1": [
+          { "date": "2026-10-05", "medianJpy": 9800, "volume": 2, "byGrade": { "sealed": null, "cib": null, "loose": 9800 } }
+        ],
+        "all": [
+          { "date": "2026-10-05", "medianJpy": 9800, "volume": 2, "byGrade": { "sealed": null, "cib": null, "loose": 9800 } }
+        ]
+      }
+    }
+  ]
+}

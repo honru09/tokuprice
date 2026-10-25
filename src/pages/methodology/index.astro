@@ -1,0 +1,371 @@
+---
+// src/pages/methodology/index.astro
+import Layout from '../../layouts/Layout.astro';
+import { getExportData } from '../../lib/data';
+
+const exportData = getExportData();
+---
+
+<Layout 
+  title="Methodology, Statistical Integrity & Data Policy"
+  description="How TokuPrice calculates Japanese tokusatsu sold price medians. Mathematical outlier elimination, condition grading standards, and zero scraped media policy."
+>
+  <div class="methodology-header-section">
+    <div class="container">
+      <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="sep">/</span>
+        <span class="current">Methodology &amp; Standards</span>
+      </nav>
+
+      <div class="header-block">
+        <span class="badge badge-cib">MATHEMATICAL STANDARDS</span>
+        <h1 class="header-headline">TokuPrice Sold-Price Index Methodology</h1>
+        <p class="header-sub">
+          TokuPrice operates on the principle that collectible toys deserve the same statistical discipline as financial equities. Below is our open methodology for secondary market transaction harvesting, outlier stripping, condition grading, and copyright compliance.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container methodology-body">
+    <div class="methodology-article-grid">
+      <div class="article-content">
+        <!-- Section 1 -->
+        <section id="aggregation" class="content-section card">
+          <h2>1. Why Medians Over Skewed Means</h2>
+          <p>
+            Secondary marketplace transaction data is inherently noisy. Single fraudulent sales, shill-bidding auctions, or unfulfilled best offers can wildly skew standard arithmetic means.
+          </p>
+          <p>
+            TokuPrice computes the <strong>50th percentile median (P50)</strong> for all benchmark prices. If 15 copies of a DX Desire Driver sell between ¥7,500 and ¥8,800, and one rogue listing sells for ¥45,000, the median remains rock-solid at ¥8,200.
+          </p>
+          <div class="formula-box font-mono">
+            Median = Value at position (N + 1) / 2 in sorted transaction array
+          </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section id="outliers" class="content-section card">
+          <h2>2. Automated Outlier Stripping (IQR Filtering)</h2>
+          <p>
+            Before any transaction enters a model's statistical pool, it passes through our automated classification and anomaly rejection pipeline:
+          </p>
+          <ul class="checklist">
+            <li>
+              <strong>Interquartile Range (IQR) Boundary:</strong> Any transaction falling outside <code>[Q1 - 1.5 * IQR, Q3 + 1.5 * IQR]</code> is flagged and quarantined.
+            </li>
+            <li>
+              <strong>Junk Lots &amp; Bulk Bundles (まとめ売り):</strong> Multi-item bundle listings are programmatically identified and rejected using regex filters.
+            </li>
+            <li>
+              <strong>Miniature &amp; Sub-variant Exclusions:</strong> Candy toys (Shokugan / SG), Gashapon (GP) capsules, mini-plastic models, and empty boxes are classified into separate categories and never contaminate DX/CSM model medians.
+            </li>
+            <li>
+              <strong>Card-Only &amp; Paper Media Exclusions:</strong> Ride Chemy Cards, Kamen Rider Battle Ganbarizing / Ganbagiri cards, and flyer inserts sold separately are rejected.
+            </li>
+          </ul>
+        </section>
+
+        <!-- Section 3 -->
+        <section id="condition" class="content-section card">
+          <h2>3. Condition Grade Taxonomy</h2>
+          <p>
+            In Japanese toy collecting, condition accounts for 70%+ of transaction value. TokuPrice enforces 4 strict condition tiers:
+          </p>
+          <div class="grades-spec-table">
+            <div class="spec-row">
+              <span class="badge badge-sealed">New / Sealed (未開封)</span>
+              <p>Factory outer plastic intact or Bandai factory tape unpeeled. Zero box tampering.</p>
+            </div>
+            <div class="spec-row">
+              <span class="badge badge-cib">Complete in Box (美品・完品)</span>
+              <p>Box opened, but item is complete with all instructions, cardboard inserts, belt straps, and accessories in near-mint condition.</p>
+            </div>
+            <div class="spec-row">
+              <span class="badge badge-used">Loose / Used (本体のみ・中古良品)</span>
+              <p>Toy body only without box. Minor normal display/play wear, electronics and sound effects 100% verified functional.</p>
+            </div>
+            <div class="spec-row">
+              <span class="badge badge-damaged">Parts &amp; Scrap Floor (ジャンク)</span>
+              <p>Damaged electronics, broken hinges, missing battery covers, or heavy scratches. Reported as a scrap baseline only and excluded from functional medians.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 4 -->
+        <section id="platforms" class="content-section card">
+          <h2>4. Platforms Harvested</h2>
+          <p>
+            Liquidity for authentic Japanese tokusatsu toys is concentrated inside Japan. TokuPrice monitors completed sold transactions across:
+          </p>
+          <div class="platforms-list">
+            <div class="platform-item">
+              <strong>Mercari Japan:</strong> Tokyo's largest consumer-to-consumer flea market platform.
+            </div>
+            <div class="platform-item">
+              <strong>Yahoo! Auctions Japan:</strong> Authoritative competitive bidding and rare vintage lot index.
+            </div>
+            <div class="platform-item">
+              <strong>Rakuma (Rakuten Flea Market):</strong> Fast-growing secondary Japanese mobile marketplace.
+            </div>
+            <div class="platform-item">
+              <strong>Mandarake Archive &amp; Kaitori:</strong> The physical collector grading authority and domestic buyback cash floor.
+            </div>
+            <div class="platform-item">
+              <strong>Suruga-ya:</strong> Japanese domestic retailer bid-ask reference.
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 5 -->
+        <section id="compliance" class="content-section card">
+          <h2>5. 100% Compliance &amp; Zero Scraped Media Policy</h2>
+          <p>
+            TokuPrice respects intellectual property, platform terms, and privacy:
+          </p>
+          <ul class="checklist">
+            <li><strong>NO Scraped Seller Photos:</strong> We never host, cache, or display user photos from Japanese auctions or flea markets.</li>
+            <li><strong>NO Scraped Descriptions:</strong> We never republish user listing text, seller commentary, or private transaction notes.</li>
+            <li><strong>Aggregated Statistics Only:</strong> All published figures are mathematical derivatives (medians, percentiles, transaction counts, dates).</li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- Sidebar summary -->
+      <aside class="methodology-aside">
+        <div class="aside-card card">
+          <h4>Pipeline Specification</h4>
+          <dl class="aside-specs">
+            <div>
+              <dt>Aggregation Cadence:</dt>
+              <dd class="tabular">Daily at 03:00 JST</dd>
+            </div>
+            <div>
+              <dt>Export Build Cadence:</dt>
+              <dd class="tabular">Daily at 03:30 JST</dd>
+            </div>
+            <div>
+              <dt>Current USD/JPY Peg:</dt>
+              <dd class="tabular font-mono">1 USD = {exportData.exchangeRateUsdJpy.toFixed(2)} JPY</dd>
+            </div>
+            <div>
+              <dt>Currency Date:</dt>
+              <dd class="tabular">{exportData.exchangeRateDate}</dd>
+            </div>
+            <div>
+              <dt>Minimum Sample Threshold:</dt>
+              <dd class="tabular">N &ge; 3 for verified median</dd>
+            </div>
+          </dl>
+        </div>
+      </aside>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .methodology-header-section {
+    background-color: var(--surface-raised);
+    border-bottom: 1px solid var(--border-default);
+    padding: 2.5rem 0 2rem;
+  }
+
+  .breadcrumb-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .breadcrumb-nav a:hover {
+    color: var(--action-primary);
+  }
+
+  .breadcrumb-nav .sep {
+    color: var(--text-subtle);
+  }
+
+  .breadcrumb-nav .current {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .header-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-width: 800px;
+  }
+
+  .header-headline {
+    font-size: 2.25rem;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  .header-sub {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .methodology-body {
+    padding-top: 2.5rem;
+    padding-bottom: 4rem;
+  }
+
+  .methodology-article-grid {
+    display: grid;
+    grid-template-columns: 8fr 4fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .article-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .content-section {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background-color: var(--surface-raised);
+    border: 1px solid var(--border-default);
+  }
+
+  .content-section h2 {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+  }
+
+  .content-section p {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .formula-box {
+    background-color: var(--surface-sunken);
+    border: 1px solid var(--border-default);
+    padding: 0.875rem 1.25rem;
+    border-radius: var(--rounded-control);
+    font-size: 0.8125rem;
+    color: var(--text-primary);
+  }
+
+  .checklist {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .checklist li {
+    padding-left: 1.5rem;
+    position: relative;
+  }
+
+  .checklist li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--state-success);
+    font-weight: 700;
+  }
+
+  .grades-spec-table {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .spec-row {
+    background-color: var(--surface-sunken);
+    padding: 1rem;
+    border-radius: var(--rounded-control);
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  .platforms-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .platform-item {
+    background-color: var(--surface-sunken);
+    padding: 0.875rem 1rem;
+    border-radius: var(--rounded-control);
+    font-size: 0.875rem;
+    color: var(--text-muted);
+  }
+
+  .platform-item strong {
+    color: var(--text-primary);
+  }
+
+  .methodology-aside {
+    position: sticky;
+    top: 80px;
+  }
+
+  .aside-card {
+    padding: 1.5rem;
+    background-color: var(--surface-raised);
+    border: 1px solid var(--border-default);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .aside-card h4 {
+    font-size: 0.9375rem;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-default);
+    padding-bottom: 0.5rem;
+  }
+
+  .aside-specs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    font-size: 0.8125rem;
+  }
+
+  .aside-specs div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .aside-specs dt {
+    color: var(--text-subtle);
+    font-size: 0.75rem;
+  }
+
+  .aside-specs dd {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  @media (max-width: 900px) {
+    .methodology-article-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .methodology-aside {
+      position: static;
+    }
+  }
+</style>

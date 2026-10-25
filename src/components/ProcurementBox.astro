@@ -1,0 +1,144 @@
+---
+// src/components/ProcurementBox.astro
+import type { ModelData } from '../lib/data';
+import { formatJpy, formatUsd } from '../lib/data';
+
+interface Props {
+  model: ModelData;
+}
+
+const { model } = Astro.props;
+const spread = model.metrics.marketSpread;
+const savingsUsd = spread?.arbitrageOpportunityUsd ?? 0;
+const hasSavings = savingsUsd > 0;
+---
+
+<div class="procurement-card card">
+  <div class="procurement-header">
+    <div class="procurement-tag">DIRECT TOKYO SOURCING</div>
+    <h3 class="procurement-title">Tokyo vs. Western Reseller Spread</h3>
+  </div>
+
+  <div class="spread-ledger">
+    <div class="ledger-row">
+      <span class="ledger-label">Tokyo Domestic Median (C2C):</span>
+      <span class="ledger-value font-mono">{formatJpy(spread.japanDomesticC2cMedianJpy)}</span>
+    </div>
+    <div class="ledger-row">
+      <span class="ledger-label">Tokyo Buyback Floor (Mandarake):</span>
+      <span class="ledger-value font-mono text-muted">{formatJpy(spread.japanShopBuybackFloorJpy)}</span>
+    </div>
+    <div class="ledger-row">
+      <span class="ledger-label">Western eBay / Importer Average:</span>
+      <span class="ledger-value font-mono">{formatUsd(spread.westernEbayAvgUsd)}</span>
+    </div>
+
+    {hasSavings && (
+      <div class="savings-banner">
+        <span class="savings-label">Direct Tokyo Arbitrage Spread:</span>
+        <strong class="savings-amount font-mono">Save ~{formatUsd(savingsUsd)} USD</strong>
+      </div>
+    )}
+  </div>
+
+  <p class="procurement-desc">
+    Western eBay sellers and dropshippers charge 40%–120% import premiums. TokuPrice Concierge procures verified mint specimens directly from Tokyo shops with in-person physical inspection.
+  </p>
+
+  <div class="procurement-actions">
+    <a 
+      href={`mailto:procure@tokuprice.com?subject=Procurement%20Request:%20${encodeURIComponent(model.canonicalNameEn)}%20(${model.slug})&body=Hello%20TokuPrice%20Concierge,%0A%0AI%20would%20like%20to%20request%20procurement%20for:%0AModel:%20${encodeURIComponent(model.canonicalNameEn)}%0AJapanese%20Name:%20${encodeURIComponent(model.canonicalNameJa)}%0APreferred%20Condition:%20Complete%20in%20Box%20(CIB)%0AMax%20Budget%20(JPY):%20${model.metrics.overall.medianPriceJpy}%0A%0APlease%20let%20me%20know%20availability%20and%20shipping%20options.`}
+      class="btn btn-primary btn-block"
+      rel="noopener noreferrer"
+    >
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+        <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+        <line x1="12" y1="22.08" x2="12" y2="12" />
+      </svg>
+      <span>Request Tokyo Procurement</span>
+    </a>
+  </div>
+</div>
+
+<style>
+  .procurement-card {
+    padding: 1.5rem;
+    background: linear-gradient(180deg, var(--surface-raised) 0%, var(--surface-sunken) 100%);
+    border: 1px solid var(--border-default);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .procurement-tag {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: var(--action-primary);
+    letter-spacing: 0.08em;
+  }
+
+  .procurement-title {
+    font-size: 1.125rem;
+    color: var(--text-primary);
+    margin-top: 0.25rem;
+  }
+
+  .spread-ledger {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background-color: var(--surface-raised);
+    padding: 1rem;
+    border-radius: var(--rounded-control);
+    border: 1px solid var(--border-default);
+  }
+
+  .ledger-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8125rem;
+  }
+
+  .ledger-label {
+    color: var(--text-muted);
+  }
+
+  .ledger-value {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .savings-banner {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px dashed var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.875rem;
+  }
+
+  .savings-label {
+    font-weight: 600;
+    color: var(--state-success);
+  }
+
+  .savings-amount {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--state-success);
+  }
+
+  .procurement-desc {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+  }
+
+  .btn-block {
+    width: 100%;
+  }
+</style>

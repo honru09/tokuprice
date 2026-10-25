@@ -1,0 +1,187 @@
+---
+// src/components/Footer.astro
+import { getExportData } from '../lib/data';
+
+const exportData = getExportData();
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="/" class="footer-logo-link">
+          <img src="/brand/lockup-horizontal-color.svg" alt="TokuPrice" width="160" height="28" />
+        </a>
+        <p class="footer-tagline">
+          The financial-grade sold price index and procurement funnel for Japanese tokusatsu collectibles.
+        </p>
+        <div class="footer-freshness tabular">
+          <span class="freshness-dot"></span>
+          <span>Tokyo Exchange Calibration: <strong>1 USD = {exportData.exchangeRateUsdJpy.toFixed(2)} JPY</strong> ({exportData.exchangeRateDate})</span>
+        </div>
+      </div>
+
+      <div class="footer-nav-col">
+        <h4 class="footer-col-title">Franchise Indexes</h4>
+        <ul class="footer-list">
+          <li><a href="/kamen-rider/">Kamen Rider Sold Index</a></li>
+          <li><a href="/ultraman/">Ultraman Replica Index</a></li>
+          <li><span class="text-subtle">Super Sentai (Wave 2)</span></li>
+          <li><a href="/watchlist/">Portfolio Watchlist</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-nav-col">
+        <h4 class="footer-col-title">Methodology & Trust</h4>
+        <ul class="footer-list">
+          <li><a href="/methodology/#aggregation">Outlier Elimination (IQR)</a></li>
+          <li><a href="/methodology/#condition">Japanese Condition Grading</a></li>
+          <li><a href="/methodology/#platforms">Platforms Tracked (5 Engines)</a></li>
+          <li><a href="/methodology/#compliance">Zero Scraped Media Policy</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-nav-col">
+        <h4 class="footer-col-title">TokuPrice Services</h4>
+        <ul class="footer-list">
+          <li><span class="highlight-tag">TokuPrice Pro (¥2,980/mo)</span></li>
+          <li><a href="/methodology/#procurement">Tokyo Concierge Procurement</a></li>
+          <li><a href="/methodology/#api">Dealer Wholesale API (Wave 2)</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="disclaimer-text">
+        <strong>Strictly Aggregated Secondary Market Statistics:</strong> TokuPrice is an independent financial index. We publish aggregated median sold prices, transaction volumes, and condition distributions. We do NOT host third-party marketplace photos, auction seller text, or user listings. All product trademarks (Kamen Rider, Ultraman, DX, CSM) remain the property of their respective rights holders (Bandai Co., Ltd., Bandai Spirits, Toei Company, Ltd., Tsuburaya Productions). TokuPrice is not affiliated with, endorsed by, or sponsored by these entities.
+      </div>
+      <div class="footer-meta">
+        <span>© {new Date().getFullYear()} TokuPrice.com. All rights reserved.</span>
+        <span>Version {exportData.version}</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: var(--surface-raised);
+    border-top: 1px solid var(--border-default);
+    margin-top: auto;
+    padding: 3rem 0 2rem;
+    color: var(--text-muted);
+    font-size: 0.8125rem;
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 2.5rem;
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+  }
+
+  .footer-tagline {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+    max-width: 320px;
+  }
+
+  .footer-freshness {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background-color: var(--surface-sunken);
+    padding: 0.375rem 0.625rem;
+    border-radius: var(--rounded-pill);
+    border: 1px solid var(--border-default);
+    width: fit-content;
+  }
+
+  .freshness-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--state-success);
+    border-radius: 50%;
+  }
+
+  .footer-col-title {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-primary);
+    margin-bottom: 0.875rem;
+  }
+
+  .footer-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .footer-list a {
+    color: var(--text-muted);
+    transition: color var(--duration-feedback) var(--ease-out);
+  }
+
+  .footer-list a:hover {
+    color: var(--action-primary);
+  }
+
+  .text-subtle {
+    color: var(--text-subtle);
+  }
+
+  .highlight-tag {
+    color: var(--action-primary);
+    font-weight: 600;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid var(--border-default);
+    padding-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    font-size: 0.75rem;
+    line-height: 1.6;
+    color: var(--text-subtle);
+  }
+
+  .footer-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+  }
+
+  @media (max-width: 900px) {
+    .footer-top {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .footer-top {
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+  }
+</style>

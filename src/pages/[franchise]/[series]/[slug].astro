@@ -1,0 +1,527 @@
+---
+// src/pages/[franchise]/[series]/[slug].astro
+import Layout from '../../../layouts/Layout.astro';
+import ConditionMatrix from '../../../components/ConditionMatrix.astro';
+import PriceChart from '../../../components/PriceChart.astro';
+import ProcurementBox from '../../../components/ProcurementBox.astro';
+import MethodologyNote from '../../../components/MethodologyNote.astro';
+import type { ModelData } from '../../../lib/data';
+import { getAllModels, formatJpy, formatUsd, formatTrend } from '../../../lib/data';
+
+export async function getStaticPaths() {
+  const models = getAllModels();
+  return models.map(model => ({
+    params: {
+      franchise: model.franchise.replace('_', '-'),
+      series: model.series,
+      slug: model.slug
+    },
+    props: { model }
+  }));
+}
+
+interface Props {
+  model: ModelData;
+}
+
+const { model } = Astro.props;
+const { overall } = model.metrics;
+const trend = formatTrend(overall.priceTrendPct30d);
+const franchisePath = model.franchise.replace('_', '-');
+const franchiseName = model.franchise === 'kamen_rider' ? 'Kamen Rider' : 'Ultraman';
+---
+
+<Layout 
+  title={`${model.canonicalNameEn} Sold Price Guide (${model.canonicalNameJa})`}
+  description={`Tokyo secondary market sold price guide for ${model.canonicalNameEn}. 30-day median ${formatJpy(overall.medianPriceJpy)} (~${formatUsd(overall.medianPriceUsd)}), condition grade matrix, and historical chart.`}
+>
+  <!-- Top Navigation & Breadcrumbs -->
+  <div class="model-hero-strip">
+    <div class="container">
+      <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="sep">/</span>
+        <a href={`/${franchisePath}/`}>{franchiseName}</a>
+        <span class="sep">/</span>
+        <span class="series-crumb">{model.seriesNameEn}</span>
+        <span class="sep">/</span>
+        <span class="current">{model.canonicalNameEn}</span>
+      </nav>
+
+      <!-- Model Hero Block -->
+      <div class="model-hero-content">
+        <div class="hero-left">
+          <div class="meta-pills">
+            <span class="badge badge-cib">{franchiseName}</span>
+            <span class="toy-type-tag">{model.toyType.toUpperCase()}</span>
+            <span class="year-tag tabular">{model.releaseYear} Release</span>
+          </div>
+
+          <h1 class="model-title">{model.canonicalNameEn}</h1>
+          <div class="model-japanese font-jp">{model.canonicalNameJa}</div>
+
+          <div class="aliases-line">
+            <span class="alias-label">Also known as:</span>
+            <span class="alias-list">{model.aliases.join(' • ')}</span>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="primary-valuation card">
+            <span class="val-label">TOKYO 30-DAY OVERALL MEDIAN</span>
+            <div class="val-primary tabular">
+              {formatJpy(overall.medianPriceJpy)}
+            </div>
+            <div class="val-usd tabular">
+              ~{formatUsd(overall.medianPriceUsd)} USD
+            </div>
+            <div class="val-velocity tabular">
+              <span class:list={['trend-chip', { 'trend-pos': trend.isPositive, 'trend-neg': trend.isNegative }]}>
+                {trend.text} (30d)
+              </span>
+              <span class="vol-tag">N={overall.soldVolume30d} verified sales</span>
+            </div>
+
+            <div class="val-actions">
+              <button 
+                type="button" 
+                class="btn btn-primary btn-sm btn-block"
+                onclick={`window.openTrackAlert({ slug: '${model.slug}', name: '${model.canonicalNameEn.replace(/'/g, "\\'")}', condition: 'cib', conditionLabel: 'Complete in Box', medianJpy: ${overall.medianPriceJpy} })`}
+              >
+                Set Price Drop Alert
+              </button>
+              <button 
+                type="button" 
+                class="btn btn-ghost btn-sm btn-block watchlist-add-btn"
+                data-slug={model.slug}
+                data-name={model.canonicalNameEn}
+                data-ja={model.canonicalNameJa}
+                data-price={overall.medianPriceJpy}
+                data-usd={overall.medianPriceUsd}
+                data-franchise={franchisePath}
+                data-series={model.series}
+              >
+                + Add to Watchlist
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Layout Track per DESIGN.md §4.1 (8 col main / 4 col side rail) -->
+  <div class="container model-layout-grid">
+    <!-- Left Analytical Track (8 columns) -->
+    <div class="main-analytical-track">
+      <!-- 1. The Condition Price Matrix -->
+      <ConditionMatrix model={model} />
+
+      <!-- 2. Historical Price Chart -->
+      <PriceChart model={model} />
+
+      <!-- 3. Methodology & Outlier Elimination Notes -->
+      <MethodologyNote />
+    </div>
+
+    <!-- Right Sticky Side Rail (4 columns) -->
+    <aside class="side-rail-track">
+      <!-- Tokyo Procurement Bridge -->
+      <ProcurementBox model={model} />
+
+      <!-- Bandai Catalog Specs Box -->
+      <div class="catalog-specs-card card">
+        <h4 class="specs-title">Official Japanese Release Specs</h4>
+        <dl class="specs-list">
+          <div class="spec-row">
+            <dt>Original MSRP:</dt>
+            <dd class="tabular">{formatJpy(model.originalMsrpJpy)}</dd>
+          </div>
+          <div class="spec-row">
+            <dt>Manufacturer:</dt>
+            <dd>{model.manufacturer}</dd>
+          </div>
+          <div class="spec-row">
+            <dt>Release Year:</dt>
+            <dd class="tabular">{model.releaseYear}</dd>
+          </div>
+          <div class="spec-row">
+            <dt>Classification:</dt>
+            <dd>{model.toyType}</dd>
+          </div>
+          <div class="spec-row">
+            <dt>90-Day Volume:</dt>
+            <dd class="tabular">{overall.soldVolume90d} units</dd>
+          </div>
+          <div class="spec-row">
+            <dt>Liquidity Velocity:</dt>
+            <dd class="tabular">Avg {overall.averageSellHours.toFixed(1)} hrs to sell</dd>
+          </div>
+        </dl>
+      </div>
+
+      <!-- TokuPrice Pro Funnel Card -->
+      <div class="pro-promo-card card">
+        <div class="pro-tag">TOKU-PRICE PRO SAAS</div>
+        <h4 class="pro-title">Beat Proxy Snipers on Japanese Flea Markets</h4>
+        <p class="pro-body">
+          Mercari Japan under-priced listings sell out within 90 seconds. TokuPrice Pro members get sub-30s push alerts the moment a {model.canonicalNameEn} is listed under market value.
+        </p>
+        <div class="pro-price tabular">
+          <strong>¥2,980/month</strong>
+          <span>(~$19.80 USD)</span>
+        </div>
+        <button 
+          type="button" 
+          class="btn btn-primary btn-sm btn-block"
+          onclick={`window.openTrackAlert({ slug: '${model.slug}', name: '${model.canonicalNameEn.replace(/'/g, "\\'")}', condition: 'cib', conditionLabel: 'Complete in Box', medianJpy: ${overall.medianPriceJpy} })`}
+        >
+          Join Pro Waitlist (7-Day Free Trial)
+        </button>
+      </div>
+    </aside>
+  </div>
+</Layout>
+
+<style>
+  .model-hero-strip {
+    background-color: var(--surface-raised);
+    border-bottom: 1px solid var(--border-default);
+    padding: 1.75rem 0 2rem;
+  }
+
+  .breadcrumb-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  .breadcrumb-nav a:hover {
+    color: var(--action-primary);
+  }
+
+  .breadcrumb-nav .sep {
+    color: var(--text-subtle);
+  }
+
+  .breadcrumb-nav .series-crumb {
+    color: var(--text-muted);
+  }
+
+  .breadcrumb-nav .current {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .model-hero-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 680px;
+  }
+
+  .meta-pills {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .toy-type-tag {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    background-color: var(--surface-sunken);
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--rounded-pill);
+    border: 1px solid var(--border-default);
+  }
+
+  .year-tag {
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    color: var(--text-subtle);
+  }
+
+  .model-title {
+    font-size: 2rem;
+    color: var(--text-primary);
+    line-height: 1.2;
+    margin-top: 0.25rem;
+  }
+
+  .model-japanese {
+    font-size: 1rem;
+    color: var(--text-muted);
+  }
+
+  .aliases-line {
+    font-size: 0.75rem;
+    color: var(--text-subtle);
+    display: flex;
+    gap: 0.375rem;
+    flex-wrap: wrap;
+    margin-top: 0.25rem;
+  }
+
+  .alias-label {
+    font-weight: 600;
+  }
+
+  .hero-right {
+    flex-shrink: 0;
+    width: 320px;
+  }
+
+  .primary-valuation {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    border: 1px solid var(--border-default);
+    background-color: var(--surface-raised);
+  }
+
+  .val-label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: var(--text-subtle);
+    letter-spacing: 0.05em;
+  }
+
+  .val-primary {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.1;
+  }
+
+  .val-usd {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .val-velocity {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    margin: 0.5rem 0;
+    padding: 0.375rem 0;
+    border-top: 1px solid var(--border-default);
+    border-bottom: 1px solid var(--border-default);
+  }
+
+  .trend-chip {
+    font-weight: 600;
+  }
+
+  .trend-pos { color: var(--state-success); }
+  .trend-neg { color: var(--state-error); }
+
+  .vol-tag {
+    color: var(--text-muted);
+  }
+
+  .val-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+  }
+
+  .btn-block {
+    width: 100%;
+  }
+
+  /* 8-col / 4-col Grid */
+  .model-layout-grid {
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+    display: grid;
+    grid-template-columns: 8fr 4fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .main-analytical-track {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .side-rail-track {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: sticky;
+    top: 80px;
+  }
+
+  .catalog-specs-card {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .specs-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-default);
+    padding-bottom: 0.5rem;
+  }
+
+  .specs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
+  }
+
+  .spec-row {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .spec-row dt {
+    color: var(--text-muted);
+  }
+
+  .spec-row dd {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .pro-promo-card {
+    padding: 1.25rem;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .pro-tag {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: #ff7a45;
+  }
+
+  .pro-title {
+    font-size: 0.9375rem;
+    color: #ffffff;
+    line-height: 1.35;
+  }
+
+  .pro-body {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    line-height: 1.45;
+  }
+
+  .pro-price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.375rem;
+    font-size: 0.875rem;
+    color: #ffffff;
+  }
+
+  .pro-price span {
+    font-size: 0.6875rem;
+    color: #94a3b8;
+  }
+
+  @media (max-width: 960px) {
+    .model-hero-content {
+      flex-direction: column;
+    }
+
+    .hero-right {
+      width: 100%;
+    }
+
+    .model-layout-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .side-rail-track {
+      position: static;
+    }
+  }
+</style>
+
+<script is:inline>
+  // Watchlist interaction
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.querySelector('.watchlist-add-btn');
+    if (!btn) return;
+
+    const slug = btn.getAttribute('data-slug');
+    const name = btn.getAttribute('data-name');
+    const ja = btn.getAttribute('data-ja');
+    const price = Number(btn.getAttribute('data-price') || 0);
+    const usd = Number(btn.getAttribute('data-usd') || 0);
+    const franchise = btn.getAttribute('data-franchise');
+    const series = btn.getAttribute('data-series');
+
+    function checkStatus() {
+      try {
+        const list = JSON.parse(localStorage.getItem('tokuprice_watchlist') || '[]');
+        const exists = list.some(item => item.slug === slug);
+        if (exists) {
+          btn.textContent = '✓ In Watchlist';
+          btn.classList.add('btn-secondary');
+          btn.classList.remove('btn-ghost');
+        } else {
+          btn.textContent = '+ Add to Watchlist';
+          btn.classList.remove('btn-secondary');
+          btn.classList.add('btn-ghost');
+        }
+      } catch (e) {}
+    }
+
+    btn.addEventListener('click', () => {
+      try {
+        let list = JSON.parse(localStorage.getItem('tokuprice_watchlist') || '[]');
+        const idx = list.findIndex(item => item.slug === slug);
+        if (idx >= 0) {
+          list.splice(idx, 1);
+        } else {
+          list.push({
+            slug,
+            name,
+            ja,
+            priceJpy: price,
+            priceUsd: usd,
+            franchise,
+            series,
+            condition: 'cib',
+            addedAt: new Date().toISOString()
+          });
+        }
+        localStorage.setItem('tokuprice_watchlist', JSON.stringify(list));
+        window.dispatchEvent(new Event('tokuprice:watchlist_updated'));
+        checkStatus();
+      } catch (e) {}
+    });
+
+    checkStatus();
+  });
+</script>

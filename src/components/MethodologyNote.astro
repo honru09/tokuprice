@@ -1,0 +1,157 @@
+---
+// src/components/MethodologyNote.astro
+---
+
+<div class="methodology-card card">
+  <div class="methodology-badge-row">
+    <span class="trust-badge">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+      </svg>
+      <span>TokuPrice Data Integrity Standard</span>
+    </span>
+  </div>
+
+  <h3 class="methodology-title">Statistical Aggregation &amp; Compliance Policy</h3>
+
+  <div class="methodology-grid">
+    <div class="grid-col">
+      <div class="col-icon">📊</div>
+      <div class="col-content">
+        <h4>100% Aggregated Secondary Statistics</h4>
+        <p>
+          Prices represent mathematical medians, rolling 30-day velocity, and interquartile distributions. We calculate fair market values to protect collectors from arbitrary reseller markups.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid-col">
+      <div class="col-icon">🛡️</div>
+      <div class="col-content">
+        <h4>Zero Scraped Media or Seller Text</h4>
+        <p>
+          We strictly do NOT scrape, hotlink, or republish third-party user photos, auction titles, or seller descriptions from Japanese marketplaces. All product taxonomy maps strictly to official catalog metadata.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid-col">
+      <div class="col-icon">🧹</div>
+      <div class="col-content">
+        <h4>Automated Outlier &amp; Junk-Lot Stripping</h4>
+        <p>
+          Our classification algorithms automatically detect and exclude multi-item junk lots (まとめ売り), candy toy mini-variants (Shokugan), bootleg copies, and box-only listings from functional medians.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid-col">
+      <div class="col-icon">🇯🇵</div>
+      <div class="col-content">
+        <h4>5-Platform Primary Market Reality</h4>
+        <p>
+          Transaction records originate directly from Tokyo’s primary secondary trading pools: Mercari Japan, Yahoo! Auctions Japan, Rakuma, Mandarake, and Suruga-ya.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="methodology-footer">
+    <a href="/methodology/" class="footer-link">
+      <span>Read full mathematical methodology &amp; validation rules</span>
+      <span aria-hidden="true">→</span>
+    </a>
+  </div>
+</div>
+
+<style>
+  .methodology-card {
+    padding: 1.75rem;
+    background-color: var(--surface-raised);
+    border: 1px solid var(--border-default);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .trust-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: var(--state-success);
+    background-color: var(--state-success-surface);
+    padding: 0.25rem 0.625rem;
+    border-radius: var(--rounded-pill);
+    letter-spacing: 0.04em;
+  }
+
+  .methodology-title {
+    font-size: 1.125rem;
+    color: var(--text-primary);
+  }
+
+  .methodology-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .grid-col {
+    display: flex;
+    gap: 0.875rem;
+  }
+
+  .col-icon {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+    line-height: 1;
+    margin-top: 0.125rem;
+  }
+
+  .col-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .col-content h4 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .col-content p {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+  }
+
+  .methodology-footer {
+    border-top: 1px solid var(--border-default);
+    padding-top: 0.875rem;
+  }
+
+  .footer-link {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--action-primary);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+
+  .footer-link:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .methodology-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+</style>

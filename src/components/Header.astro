@@ -1,0 +1,160 @@
+---
+// src/components/Header.astro
+const pathname = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="brand-link" aria-label="TokuPrice Home">
+      <img src="/brand/lockup-horizontal-color.svg" alt="TokuPrice Japan Sold-Price Index" width="200" height="34" class="brand-logo" />
+    </a>
+
+    <nav class="nav-links" aria-label="Primary Navigation">
+      <a 
+        href="/kamen-rider/" 
+        class:list={['nav-item', { active: pathname.startsWith('/kamen-rider') }]}
+      >
+        Kamen Rider
+      </a>
+      <a 
+        href="/ultraman/" 
+        class:list={['nav-item', { active: pathname.startsWith('/ultraman') }]}
+      >
+        Ultraman
+      </a>
+      <a 
+        href="/watchlist/" 
+        class:list={['nav-item', 'nav-watchlist', { active: pathname.startsWith('/watchlist') }]}
+      >
+        <span>Watchlist</span>
+        <span class="watchlist-pill" id="header-watchlist-count">0</span>
+      </a>
+      <a 
+        href="/methodology/" 
+        class:list={['nav-item', { active: pathname.startsWith('/methodology') }]}
+      >
+        Methodology
+      </a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    background-color: var(--surface-raised);
+    border-bottom: 1px solid var(--border-default);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    gap: 1.5rem;
+  }
+
+  .brand-link {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .brand-logo {
+    display: block;
+    height: 34px;
+    width: auto;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .nav-item {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    padding: 0.5rem 0.875rem;
+    border-radius: var(--rounded-control);
+    transition: color var(--duration-feedback) var(--ease-out),
+                background-color var(--duration-feedback) var(--ease-out);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+
+  .nav-item:hover {
+    color: var(--text-primary);
+    background-color: var(--surface-sunken);
+  }
+
+  .nav-item.active {
+    color: var(--action-primary);
+    background-color: var(--surface-sunken);
+  }
+
+  .watchlist-pill {
+    background-color: var(--surface-sunken);
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    padding: 0.125rem 0.4rem;
+    border-radius: var(--rounded-pill);
+    border: 1px solid var(--border-default);
+    line-height: 1;
+  }
+
+  @media (max-width: 640px) {
+    .header-inner {
+      height: 56px;
+      gap: 0.5rem;
+    }
+
+    .brand-logo {
+      height: 28px;
+    }
+
+    .nav-links {
+      gap: 0.25rem;
+    }
+
+    .nav-item {
+      font-size: 0.75rem;
+      padding: 0.375rem 0.5rem;
+    }
+  }
+</style>
+
+<script is:inline>
+  // Update watchlist count dynamically from localStorage
+  function updateHeaderWatchlist() {
+    try {
+      const items = JSON.parse(localStorage.getItem('tokuprice_watchlist') || '[]');
+      const badge = document.getElementById('header-watchlist-count');
+      if (badge) {
+        badge.textContent = items.length.toString();
+        if (items.length > 0) {
+          badge.style.backgroundColor = 'var(--action-primary)';
+          badge.style.color = '#ffffff';
+          badge.style.borderColor = 'var(--action-primary)';
+        } else {
+          badge.style.backgroundColor = 'var(--surface-sunken)';
+          badge.style.color = 'var(--text-primary)';
+          badge.style.borderColor = 'var(--border-default)';
+        }
+      }
+    } catch (e) {
+      // localStorage disabled or private browsing
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', updateHeaderWatchlist);
+  window.addEventListener('storage', updateHeaderWatchlist);
+  window.addEventListener('tokuprice:watchlist_updated', updateHeaderWatchlist);
+</script>

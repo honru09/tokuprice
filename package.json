@@ -1,0 +1,16 @@
+{
+  "name": "tokuprice",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "astro build",
+    "dev": "astro dev",
+    "preview": "astro preview",
+    "test:stress": "LOAD_FIXTURES=true astro build"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.2.1",
+    "astro": "^5.18.2"
+  }
+}

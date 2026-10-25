@@ -1,0 +1,244 @@
+---
+// src/components/PipelineCompilingBanner.astro
+import { getExportData } from '../lib/data';
+
+const exportData = getExportData();
+---
+
+<div class="compiling-card card">
+  <div class="compiling-header">
+    <div class="status-pill tabular">
+      <span class="pulsing-dot"></span>
+      <span>PIPELINE STATUS: <strong>COMPILING INITIAL INDEX</strong></span>
+    </div>
+    <span class="batch-cadence tabular">Scheduled Daily Aggregation: 03:00 JST</span>
+  </div>
+
+  <div class="compiling-content">
+    <h3 class="compiling-title">Tokyo Collectibles Sold-Price Index Is Being Compiled</h3>
+    <p class="compiling-desc">
+      Our automated extraction pipeline is currently ingesting and synthesizing verified completed transaction records from <strong>Mercari Japan, Yahoo! Auctions Japan, Mandarake Kaitori, and Suruga-ya</strong>.
+    </p>
+
+    <div class="compiling-specs-grid">
+      <div class="spec-item">
+        <span class="spec-label">Target Models</span>
+        <strong class="spec-val">250+ Flagship Belts &amp; Replicas</strong>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">Franchises In Queue</span>
+        <strong class="spec-val">Kamen Rider &amp; Ultraman</strong>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">Condition Segregation</span>
+        <strong class="spec-val">Sealed / CIB / Loose / Parts</strong>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">Pricing Integrity</span>
+        <strong class="spec-val">0 Fabricated Numbers</strong>
+      </div>
+    </div>
+
+    <div class="compiling-waitlist-box">
+      <div class="waitlist-copy">
+        <strong>Want notification when the index goes live?</strong>
+        <span>Join 500+ collectors tracking Tokyo price trends.</span>
+      </div>
+      <form class="waitlist-form" onsubmit="event.preventDefault(); this.innerHTML='<span class=\'waitlist-success\'>✓ Subscribed to compilation updates</span>';">
+        <input 
+          type="email" 
+          placeholder="your.email@example.com" 
+          required 
+          class="waitlist-input"
+          autocomplete="email"
+        />
+        <button type="submit" class="btn btn-primary btn-sm">
+          Notify Me
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<style>
+  .compiling-card {
+    padding: 2rem;
+    border: 1px solid var(--border-default);
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    box-shadow: var(--elevation-card);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .compiling-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    border-bottom: 1px solid var(--border-default);
+    padding-bottom: 1rem;
+  }
+
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    color: var(--action-primary);
+    background-color: #fff7ed;
+    border: 1px solid #ffedd5;
+    padding: 0.25rem 0.625rem;
+    border-radius: var(--rounded-pill);
+  }
+
+  .pulsing-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--action-primary);
+    box-shadow: 0 0 0 0 rgba(217, 72, 15, 0.7);
+    animation: pulse 1.8s infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(217, 72, 15, 0.7);
+    }
+    70% {
+      transform: scale(1);
+      box-shadow: 0 0 0 6px rgba(217, 72, 15, 0);
+    }
+    100% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(217, 72, 15, 0);
+    }
+  }
+
+  .batch-cadence {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .compiling-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .compiling-title {
+    font-size: 1.375rem;
+    color: var(--text-primary);
+  }
+
+  .compiling-desc {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    max-width: 720px;
+  }
+
+  .compiling-specs-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    background-color: var(--surface-sunken);
+    padding: 1.25rem;
+    border-radius: var(--rounded-control);
+    border: 1px solid var(--border-default);
+  }
+
+  .spec-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .spec-label {
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-subtle);
+    font-weight: 600;
+  }
+
+  .spec-val {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .compiling-waitlist-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #ffffff;
+    padding: 1.25rem 1.5rem;
+    border-radius: var(--rounded-control);
+  }
+
+  .waitlist-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.875rem;
+  }
+
+  .waitlist-copy span {
+    font-size: 0.75rem;
+    color: #94a3b8;
+  }
+
+  .waitlist-form {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .waitlist-input {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--rounded-control);
+    padding: 0.375rem 0.75rem;
+    font-size: 0.8125rem;
+    color: #ffffff;
+    min-width: 220px;
+    height: 34px;
+  }
+
+  .waitlist-input::placeholder {
+    color: #94a3b8;
+  }
+
+  .waitlist-success {
+    font-size: 0.8125rem;
+    color: #86efac;
+    font-weight: 600;
+  }
+
+  @media (max-width: 768px) {
+    .compiling-specs-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .compiling-waitlist-box {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .waitlist-form {
+      width: 100%;
+    }
+
+    .waitlist-input {
+      flex: 1;
+    }
+  }
+</style>

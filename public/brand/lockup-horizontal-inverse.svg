@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 40" width="240" height="40" role="img" aria-label="TokuPrice">
+  <title>TokuPrice Japan Sold-Price Index</title>
+  <!-- Mark (Scaled to 32px) -->
+  <g transform="translate(4, 4) scale(0.5)">
+    <circle cx="32" cy="32" r="26" stroke="#ffffff" stroke-width="3.5" fill="none"/>
+    <line x1="32" y1="6" x2="32" y2="10" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="32" y1="54" x2="32" y2="58" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="6" y1="32" x2="10" y2="32" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="54" y1="32" x2="58" y2="32" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M 16 44 C 22 44 26 38 32 32 L 48 16" stroke="#ff7a45" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <circle cx="32" cy="32" r="3.5" fill="#ff7a45"/>
+    <circle cx="32" cy="32" r="1.5" fill="#0f172a"/>
+    <polygon points="50,10 56,16 50,22 44,16" fill="#ff7a45"/>
+    <polygon points="50,12 54,16 50,20 46,16" fill="#ffffff"/>
+  </g>
+  <!-- Brand Wordmark -->
+  <text x="44" y="23" font-family="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="700" letter-spacing="-0.03em">
+    <tspan fill="#ffffff">Toku</tspan><tspan fill="#ff7a45">Price</tspan>
+  </text>
+  <!-- Financial Sub-Label -->
+  <text x="45" y="34" font-family="'JetBrains Mono', 'SF Mono', Consolas, monospace" font-size="7.5" font-weight="600" letter-spacing="0.14em" fill="#94a3b8">JAPAN SOLD-PRICE INDEX</text>
+</svg>
