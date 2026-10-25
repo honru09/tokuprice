@@ -1,8 +1,8 @@
 {
   "version": "1.0.0",
   "pipelineStatus": "ready",
-  "pipelineMessage": "Live index: 135 models aggregated from 182 verified sold listings. Updated daily at 03:00 JST.",
-  "lastExportAt": "2026-10-25T14:31:04Z",
+  "pipelineMessage": "Live index: 139 models aggregated from 187 verified sold listings. Updated daily at 03:00 JST.",
+  "lastExportAt": "2026-10-25T18:00:02Z",
   "exchangeRateUsdJpy": 156.8,
   "exchangeRateDate": "2026-10-23",
   "platformsTracked": [
@@ -2819,6 +2819,115 @@
       }
     },
     {
+      "slug": "agt1-2",
+      "canonicalSlug": "kamen-rider/gavv/agt1-2",
+      "canonicalNameEn": "装動 仮面ライダーゼッツ　 AGT1 コードゼロイダー A・B 2種セット",
+      "canonicalNameJa": "装動 仮面ライダーゼッツ　 AGT1 コードゼロイダー A・B 2種セット",
+      "romaji": "装動 仮面ライダーゼッツ agt1 コードゼロイダー a b 2種セット",
+      "aliases": [],
+      "franchise": "kamen_rider",
+      "franchiseNameEn": "Kamen Rider",
+      "series": "gavv",
+      "seriesNameEn": "Kamen Rider Gavv",
+      "toyType": "figure",
+      "manufacturer": "BANDAI",
+      "releaseYear": 0,
+      "originalMsrpJpy": 0,
+      "metrics": {
+        "overall": {
+          "medianPriceJpy": 1680,
+          "medianPriceUsd": 10.71,
+          "priceRangeMinJpy": 1680,
+          "priceRangeMaxJpy": 1680,
+          "soldVolume30d": 1,
+          "soldVolume90d": 1,
+          "priceTrendPct30d": 0.0,
+          "averageSellHours": 63.2
+        },
+        "byCondition": {
+          "new_sealed": {
+            "medianPriceJpy": 1680,
+            "medianPriceUsd": 10.71,
+            "soldVolume30d": 1,
+            "priceMinJpy": 1680,
+            "priceMaxJpy": 1680
+          },
+          "like_new": {
+            "medianPriceJpy": null,
+            "medianPriceUsd": null,
+            "soldVolume30d": 0
+          },
+          "used": {
+            "medianPriceJpy": null,
+            "medianPriceUsd": null,
+            "soldVolume30d": 0
+          },
+          "damaged_or_junk": {
+            "medianPriceJpy": null,
+            "medianPriceUsd": null,
+            "soldVolume30d": 0,
+            "note": "Floor parts value. Excluded from functional medians."
+          }
+        },
+        "marketSpread": {
+          "japanDomesticC2cMedianJpy": 1680,
+          "japanShopBuybackFloorJpy": 0,
+          "westernEbayAvgUsd": 0,
+          "arbitrageOpportunityUsd": 0
+        }
+      },
+      "timeSeries": {
+        "days30": [
+          {
+            "date": "2026-10-23",
+            "medianJpy": 1680,
+            "volume": 1,
+            "byGrade": {
+              "sealed": 1680,
+              "cib": null,
+              "loose": null
+            }
+          }
+        ],
+        "days90": [
+          {
+            "date": "2026-10-23",
+            "medianJpy": 1680,
+            "volume": 1,
+            "byGrade": {
+              "sealed": 1680,
+              "cib": null,
+              "loose": null
+            }
+          }
+        ],
+        "year1": [
+          {
+            "date": "2026-10-19",
+            "medianJpy": 1680,
+            "volume": 1,
+            "byGrade": {
+              "sealed": 1680,
+              "cib": null,
+              "loose": null
+            }
+          }
+        ],
+        "all": [
+          {
+            "date": "2026-10-19",
+            "medianJpy": 1680,
+            "volume": 1,
+            "byGrade": {
+              "sealed": 1680,
+              "cib": null,
+              "loose": null
+            }
+          }
+        ]
+      }
+    },
+    {
       "slug": "model-cfe361557c",
       "canonicalSlug": "kamen-rider/geats/model-cfe361557c",
       "canonicalNameEn": "S.H.Figuarts セット",
@@ -4256,8 +4365,8 @@
       }
     },
     {
-      "slug": "dx-box02-8",
-      "canonicalSlug": "kamen-rider/general/dx-box02-8",
+      "slug": "dx-box02-9",
+      "canonicalSlug": "kamen-rider/general/dx-box02-9",
       "canonicalNameEn": "DXライダーエグズ ランダムBOX02 シードエグズコンプリートセット 仮面ライダーマイス",
       "canonicalNameJa": "DXライダーエグズ ランダムBOX02 シードエグズコンプリートセット 仮面ライダーマイス",
       "romaji": "dxライダーエグズ ランダムbox02 シードエグズコンプリートセット 仮面ライダーマイス",
@@ -4365,8 +4474,8 @@
       }
     },
     {
-      "slug": "dx-box02-7",
-      "canonicalSlug": "kamen-rider/general/dx-box02-7",
+      "slug": "dx-box02-8",
+      "canonicalSlug": "kamen-rider/general/dx-box02-8",
       "canonicalNameEn": "DXライダーエグズ ランダムBOX02 仮面ライダーマイス",
       "canonicalNameJa": "DXライダーエグズ ランダムBOX02 仮面ライダーマイス",
       "romaji": "dxライダーエグズ ランダムbox02 仮面ライダーマイス",
@@ -7037,22 +7146,22 @@
       "originalMsrpJpy": 0,
       "metrics": {
         "overall": {
-          "medianPriceJpy": 850,
-          "medianPriceUsd": 5.42,
-          "priceRangeMinJpy": 810,
-          "priceRangeMaxJpy": 1050,
-          "soldVolume30d": 3,
-          "soldVolume90d": 3,
+          "medianPriceJpy": 910,
+          "medianPriceUsd": 5.8,
+          "priceRangeMinJpy": 815,
+          "priceRangeMaxJpy": 1061,
+          "soldVolume30d": 4,
+          "soldVolume90d": 4,
           "priceTrendPct30d": 0.0,
-          "averageSellHours": 3.3
+          "averageSellHours": 11.8
         },
         "byCondition": {
           "new_sealed": {
-            "medianPriceJpy": 850,
-            "medianPriceUsd": 5.42,
-            "soldVolume30d": 3,
-            "priceMinJpy": 810,
-            "priceMaxJpy": 1050
+            "medianPriceJpy": 910,
+            "medianPriceUsd": 5.8,
+            "soldVolume30d": 4,
+            "priceMinJpy": 815,
+            "priceMaxJpy": 1061
           },
           "like_new": {
             "medianPriceJpy": null,
@@ -7072,7 +7181,7 @@
           }
         },
         "marketSpread": {
-          "japanDomesticC2cMedianJpy": 850,
+          "japanDomesticC2cMedianJpy": 910,
           "japanShopBuybackFloorJpy": 0,
           "westernEbayAvgUsd": 0,
           "arbitrageOpportunityUsd": 0
@@ -7082,10 +7191,10 @@
         "days30": [
           {
             "date": "2026-10-24",
-            "medianJpy": 850,
-            "volume": 3,
+            "medianJpy": 910,
+            "volume": 4,
             "byGrade": {
-              "sealed": 850,
+              "sealed": 910,
               "cib": null,
               "loose": null
             }
@@ -7094,10 +7203,10 @@
         "days90": [
           {
             "date": "2026-10-24",
-            "medianJpy": 850,
-            "volume": 3,
+            "medianJpy": 910,
+            "volume": 4,
             "byGrade": {
-              "sealed": 850,
+              "sealed": 910,
               "cib": null,
               "loose": null
             }
@@ -7106,10 +7215,10 @@
         "year1": [
           {
             "date": "2026-10-19",
-            "medianJpy": 850,
-            "volume": 3,
+            "medianJpy": 910,
+            "volume": 4,
             "byGrade": {
-              "sealed": 850,
+              "sealed": 910,
               "cib": null,
               "loose": null
             }
@@ -7118,10 +7227,10 @@
         "all": [
           {
             "date": "2026-10-19",
-            "medianJpy": 850,
-            "volume": 3,
+            "medianJpy": 910,
+            "volume": 4,
             "byGrade": {
-              "sealed": 850,
+              "sealed": 910,
               "cib": null,
               "loose": null
             }
@@ -7130,8 +7239,8 @@
       }
     },
     {
-      "slug": "dx-box02-9",
-      "canonicalSlug": "kamen-rider/general/dx-box02-9",
+      "slug": "dx-box02-10",
+      "canonicalSlug": "kamen-rider/general/dx-box02-10",
       "canonicalNameEn": "仮面ライダーマイス DXライダーエグズ ランダムBOX02 パンダシードエグズ",
       "canonicalNameJa": "仮面ライダーマイス DXライダーエグズ ランダムBOX02 パンダシードエグズ",
       "romaji": "仮面ライダーマイス dxライダーエグズ ランダムbox02 パンダシードエグズ",
@@ -7239,8 +7348,8 @@
       }
     },
     {
-      "slug": "dx-box02-10",
-      "canonicalSlug": "kamen-rider/general/dx-box02-10",
+      "slug": "dx-box02-12",
+      "canonicalSlug": "kamen-rider/general/dx-box02-12",
       "canonicalNameEn": "仮面ライダーマイス DXライダーエグズ ランダムBOX02 ペンギンシードエグズ",
       "canonicalNameJa": "仮面ライダーマイス DXライダーエグズ ランダムBOX02 ペンギンシードエグズ",
       "romaji": "仮面ライダーマイス dxライダーエグズ ランダムbox02 ペンギンシードエグズ",
@@ -9956,6 +10065,115 @@
             "volume": 1,
             "byGrade": {
               "sealed": 2777,
+              "cib": null,
+              "loose": null
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "dx-box02-7",
+      "canonicalSlug": "kamen-rider/general/dx-box02-7",
+      "canonicalNameEn": "仮面ライダーマイス　DXライダーエグズ ランダムBOX02 ライドエグズ　ライダーエグズ　シードエグズ　仮面ライダーゼッツ",
+      "canonicalNameJa": "仮面ライダーマイス　DXライダーエグズ ランダムBOX02 ライドエグズ　ライダーエグズ　シードエグズ　仮面ライダーゼッツ",
+      "romaji": "仮面ライダーマイス dxライダーエグズ ランダムbox02 ライドエグズ ライダーエグズ シードエグズ 仮面ライダーゼッツ",
+      "aliases": [],
+      "franchise": "kamen_rider",
+      "franchiseNameEn": "Kamen Rider",
+      "series": "general",
+      "seriesNameEn": "Kamen Rider",
+      "toyType": "set",
+      "manufacturer": "Bandai",
+      "releaseYear": 0,
+      "originalMsrpJpy": 0,
+      "metrics": {
+        "overall": {
+          "medianPriceJpy": 3600,
+          "medianPriceUsd": 22.96,
+          "priceRangeMinJpy": 3600,
+          "priceRangeMaxJpy": 3600,
+          "soldVolume30d": 1,
+          "soldVolume90d": 1,
+          "priceTrendPct30d": 0.0,
+          "averageSellHours": 34.1
+        },
+        "byCondition": {
+          "new_sealed": {
+            "medianPriceJpy": 3600,
+            "medianPriceUsd": 22.96,
+            "soldVolume30d": 1,
+            "priceMinJpy": 3600,
+            "priceMaxJpy": 3600
+          },
+          "like_new": {
+            "medianPriceJpy": null,
+            "medianPriceUsd": null,
+            "soldVolume30d": 0
+          },
+          "used": {
+            "medianPriceJpy": null,
+            "medianPriceUsd": null,
+            "soldVolume30d": 0
+          },
+          "damaged_or_junk": {
+            "medianPriceJpy": null,
+            "medianPriceUsd": null,
+            "soldVolume30d": 0,
+            "note": "Floor parts value. Excluded from functional medians."
+          }
+        },
+        "marketSpread": {
+          "japanDomesticC2cMedianJpy": 3600,
+          "japanShopBuybackFloorJpy": 0,
+          "westernEbayAvgUsd": 0,
+          "arbitrageOpportunityUsd": 0
+        }
+      },
+      "timeSeries": {
+        "days30": [
+          {
+            "date": "2026-10-24",
+            "medianJpy": 3600,
+            "volume": 1,
+            "byGrade": {
+              "sealed": 3600,
+              "cib": null,
+              "loose": null
+            }
+          }
+        ],
+        "days90": [
+          {
+            "date": "2026-10-24",
+            "medianJpy": 3600,
+            "volume": 1,
+            "byGrade": {
+              "sealed": 3600,
+              "cib": null,
+              "loose": null
+            }
+          }
+        ],
+        "year1": [
+          {
+            "date": "2026-10-19",
+            "medianJpy": 3600,
+            "volume": 1,
+            "byGrade": {
+              "sealed": 3600,
+              "cib": null,
+              "loose": null
+            }
+          }
+        ],
+        "all": [
+          {
+            "date": "2026-10-19",
+            "medianJpy": 3600,
+            "volume": 1,
+            "byGrade": {
+              "sealed": 3600,
               "cib": null,
               "loose": null
             }
@@ -13443,6 +13661,115 @@
       }
     },
     {
+      "slug": "model-e90f112997",
+      "canonicalSlug": "ultraman/arc/model-e90f112997",
+      "canonicalNameEn": "ウルトラアクションフィギュア ウルトラマンアーク ソリスアーマー＆ルーナアーマーセット",
+      "canonicalNameJa": "ウルトラアクションフィギュア ウルトラマンアーク ソリスアーマー＆ルーナアーマーセット",
+      "romaji": "ウルトラアクションフィギュア ウルトラマンアーク ソリスアーマー ルーナアーマーセット",
+      "aliases": [],
+      "franchise": "ultraman",
+      "franchiseNameEn": "Ultraman",
+      "series": "arc",
+      "seriesNameEn": "Ultraman Arc",
+      "toyType": "figure",
+      "manufacturer": "BANDAI",
+      "releaseYear": 0,
+      "originalMsrpJpy": 0,
+      "metrics": {
+        "overall": {
+          "medianPriceJpy": 2550,
+          "medianPriceUsd": 16.26,
+          "priceRangeMinJpy": 2550,
+          "priceRangeMaxJpy": 2550,
+          "soldVolume30d": 1,
+          "soldVolume90d": 1,
+          "priceTrendPct30d": 0.0,
+          "averageSellHours": 80.2
+        },
+        "byCondition": {
+          "new_sealed": {
+            "medianPriceJpy": 2550,
+            "medianPriceUsd": 16.26,
+            "soldVolume30d": 1,
+            "priceMinJpy": 2550,
+            "priceMaxJpy": 2550
+          },
+          "like_new": {
+            "medianPriceJpy": null,
+            "medianPriceUsd": null,
+            "soldVolume30d": 0
+          },
+          "used": {
+            "medianPriceJpy": null,
+            "medianPriceUsd": null,
+            "soldVolume30d": 0
+          },
+          "damaged_or_junk": {
+            "medianPriceJpy": null,
+            "medianPriceUsd": null,
+            "soldVolume30d": 0,
+            "note": "Floor parts value. Excluded from functional medians."
+          }
+        },
+        "marketSpread": {
+          "japanDomesticC2cMedianJpy": 2550,
+          "japanShopBuybackFloorJpy": 0,
+          "westernEbayAvgUsd": 0,
+          "arbitrageOpportunityUsd": 0
+        }
+      },
+      "timeSeries": {
+        "days30": [
+          {
+            "date": "2026-10-23",
+            "medianJpy": 2550,
+            "volume": 1,
+            "byGrade": {
+              "sealed": 2550,
+              "cib": null,
+              "loose": null
+            }
+          }
+        ],
+        "days90": [
+          {
+            "date": "2026-10-23",
+            "medianJpy": 2550,
+            "volume": 1,
+            "byGrade": {
+              "sealed": 2550,
+              "cib": null,
+              "loose": null
+            }
+          }
+        ],
+        "year1": [
+          {
+            "date": "2026-10-19",
+            "medianJpy": 2550,
+            "volume": 1,
+            "byGrade": {
+              "sealed": 2550,
+              "cib": null,
+              "loose": null
+            }
+          }
+        ],
+        "all": [
+          {
+            "date": "2026-10-19",
+            "medianJpy": 2550,
+            "volume": 1,
+            "byGrade": {
+              "sealed": 2550,
+              "cib": null,
+              "loose": null
+            }
+          }
+        ]
+      }
+    },
+    {
       "slug": "model-a952345dde",
       "canonicalSlug": "ultraman/general/model-a952345dde",
       "canonicalNameEn": "S.H.Figuarts ウルトラマンオーブ オーブオリジン",
@@ -14527,6 +14854,115 @@
               "sealed": 6480,
               "cib": null,
               "loose": null
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "model-04616445c9",
+      "canonicalSlug": "ultraman/general/model-04616445c9",
+      "canonicalNameEn": "ウルトラマンソフビ11体セット",
+      "canonicalNameJa": "ウルトラマンソフビ11体セット",
+      "romaji": "ウルトラマンソフビ11体セット by メルカリ",
+      "aliases": [],
+      "franchise": "ultraman",
+      "franchiseNameEn": "Ultraman",
+      "series": "general",
+      "seriesNameEn": "Ultraman",
+      "toyType": "sofubi",
+      "manufacturer": "Bandai",
+      "releaseYear": 0,
+      "originalMsrpJpy": 0,
+      "metrics": {
+        "overall": {
+          "medianPriceJpy": 2500,
+          "medianPriceUsd": 15.94,
+          "priceRangeMinJpy": 2500,
+          "priceRangeMaxJpy": 2500,
+          "soldVolume30d": 1,
+          "soldVolume90d": 1,
+          "priceTrendPct30d": 0.0,
+          "averageSellHours": 28.3
+        },
+        "byCondition": {
+          "new_sealed": {
+            "medianPriceJpy": null,
+            "medianPriceUsd": null,
+            "soldVolume30d": 0
+          },
+          "like_new": {
+            "medianPriceJpy": null,
+            "medianPriceUsd": null,
+            "soldVolume30d": 0
+          },
+          "used": {
+            "medianPriceJpy": 2500,
+            "medianPriceUsd": 15.94,
+            "soldVolume30d": 1,
+            "priceMinJpy": 2500,
+            "priceMaxJpy": 2500
+          },
+          "damaged_or_junk": {
+            "medianPriceJpy": null,
+            "medianPriceUsd": null,
+            "soldVolume30d": 0,
+            "note": "Floor parts value. Excluded from functional medians."
+          }
+        },
+        "marketSpread": {
+          "japanDomesticC2cMedianJpy": 2500,
+          "japanShopBuybackFloorJpy": 0,
+          "westernEbayAvgUsd": 0,
+          "arbitrageOpportunityUsd": 0
+        }
+      },
+      "timeSeries": {
+        "days30": [
+          {
+            "date": "2026-10-24",
+            "medianJpy": 2500,
+            "volume": 1,
+            "byGrade": {
+              "sealed": null,
+              "cib": null,
+              "loose": 2500
+            }
+          }
+        ],
+        "days90": [
+          {
+            "date": "2026-10-24",
+            "medianJpy": 2500,
+            "volume": 1,
+            "byGrade": {
+              "sealed": null,
+              "cib": null,
+              "loose": 2500
+            }
+          }
+        ],
+        "year1": [
+          {
+            "date": "2026-10-19",
+            "medianJpy": 2500,
+            "volume": 1,
+            "byGrade": {
+              "sealed": null,
+              "cib": null,
+              "loose": 2500
+            }
+          }
+        ],
+        "all": [
+          {
+            "date": "2026-10-19",
+            "medianJpy": 2500,
+            "volume": 1,
+            "byGrade": {
+              "sealed": null,
+              "cib": null,
+              "loose": 2500
             }
           }
         ]
