@@ -3,7 +3,10 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import TrackAlertModal from '../components/TrackAlertModal.astro';
+import { getWatchlistMigration } from '../lib/data';
 import '../styles/global.css';
+
+const watchlistMigration = getWatchlistMigration();
 
 interface Props {
   title: string;
@@ -52,6 +55,45 @@ const fullTitle = title.includes('TokuPrice') ? title : `${title} | TokuPrice â€
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
   </head>
   <body>
+    <!-- Watchlist slug migration (curation overlay): rewrite stored entries
+         keyed by pre-curation slugs before any other script reads them.
+         Renamed/merged slugs point at the surviving model; excluded lots are
+         dropped (their pages no longer exist); merges de-duplicate. -->
+    <script is:inline define:vars={{ watchlistMigration }}>
+      try {
+        const rawList = localStorage.getItem('tokuprice_watchlist');
+        if (rawList) {
+          const list = JSON.parse(rawList || '[]');
+          if (Array.isArray(list) && list.length) {
+            const removed = new Set(watchlistMigration.removed || []);
+            const seen = new Set();
+            const migrated = [];
+            let changed = false;
+            for (const item of list) {
+              if (!item || !item.slug) continue;
+              if (removed.has(item.slug)) {
+                changed = true;
+                continue;
+              }
+              const target = (watchlistMigration.renames || {})[item.slug];
+              const next = target
+                ? { ...item, slug: target.slug, name: target.name, ja: target.ja, franchise: target.franchise, series: target.series }
+                : item;
+              if (target) changed = true;
+              if (seen.has(next.slug)) {
+                changed = true;
+                continue;
+              }
+              seen.add(next.slug);
+              migrated.push(next);
+            }
+            if (changed) {
+              localStorage.setItem('tokuprice_watchlist', JSON.stringify(migrated));
+            }
+          }
+        }
+      } catch (e) {}
+    </script>
     <Header />
     <main id="main-content" class="site-main">
       <slot />

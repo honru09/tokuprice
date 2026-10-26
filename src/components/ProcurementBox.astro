@@ -9,6 +9,13 @@ interface Props {
 
 const { model } = Astro.props;
 const spread = model.metrics.marketSpread;
+// marketSpread debt: only the domestic C2C median is real exported data.
+// japanShopBuybackFloorJpy / westernEbayAvgUsd / arbitrageOpportunityUsd are
+// exported as 0 when untracked — a 0 there means "no data", never a price,
+// so untracked rows render an em dash instead of ¥0 / $0.00.
+const c2cMedianJpy = spread?.japanDomesticC2cMedianJpy ?? 0;
+const buybackFloorJpy = spread?.japanShopBuybackFloorJpy ?? 0;
+const westernAvgUsd = spread?.westernEbayAvgUsd ?? 0;
 const savingsUsd = spread?.arbitrageOpportunityUsd ?? 0;
 const hasSavings = savingsUsd > 0;
 ---
@@ -22,15 +29,15 @@ const hasSavings = savingsUsd > 0;
   <div class="spread-ledger">
     <div class="ledger-row">
       <span class="ledger-label">Tokyo Domestic Median (C2C):</span>
-      <span class="ledger-value font-mono">{formatJpy(spread.japanDomesticC2cMedianJpy)}</span>
+      <span class="ledger-value font-mono">{c2cMedianJpy > 0 ? formatJpy(c2cMedianJpy) : '—'}</span>
     </div>
     <div class="ledger-row">
       <span class="ledger-label">Tokyo Buyback Floor (Mandarake):</span>
-      <span class="ledger-value font-mono text-muted">{formatJpy(spread.japanShopBuybackFloorJpy)}</span>
+      <span class="ledger-value font-mono text-muted">{buybackFloorJpy > 0 ? formatJpy(buybackFloorJpy) : '— Not tracked yet'}</span>
     </div>
     <div class="ledger-row">
       <span class="ledger-label">Western eBay / Importer Average:</span>
-      <span class="ledger-value font-mono">{formatUsd(spread.westernEbayAvgUsd)}</span>
+      <span class="ledger-value font-mono">{westernAvgUsd > 0 ? formatUsd(westernAvgUsd) : '— Not tracked yet'}</span>
     </div>
 
     {hasSavings && (

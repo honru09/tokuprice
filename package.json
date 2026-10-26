@@ -7,6 +7,8 @@
     "build": "astro build",
     "dev": "astro dev",
     "preview": "astro preview",
+    "generate:redirects": "node scripts/generate-redirects.mjs",
+    "check:curation": "node scripts/check-curation.mjs",
     "test:stress": "LOAD_FIXTURES=true astro build"
   },
   "dependencies": {
